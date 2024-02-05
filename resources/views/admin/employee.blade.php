@@ -82,7 +82,7 @@
                                         <td>{{ $item->employeename }}</td>
                                         <td>{{ $item->employeeaddress }}</td>
                                         <td>{{ $item->employeecontact }}</td>
-                                        <td>{{ $item->employeeprofession }}</td>
+                                        <td>{{ $item->profession }}</td>
                                         <td>
                                             @if ($item->status == 1)
                                                 <span class="badges bg-lightgreen">AKTIF</span>
@@ -180,7 +180,7 @@
                                 <div class="custom-file-container" data-upload-id="myFirstImage">
                                     <label>Signature(PNG/JPG) <a href="javascript:void(0)"
                                             class="custom-file-container__image-clear" title="Clear Image">x</a></label>
-                                    <label class="custom-file-container__custom-file">
+                                    <label class="custom-file-container__custom-file-1">
                                         <input type="file"
                                             class="custom-file-container__custom-file__custom-file-input"
                                             name="employeesignature" accept="image/*">

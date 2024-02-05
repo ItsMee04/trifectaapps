@@ -2,18 +2,23 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 use App\Models\EmployeeModel;
 use App\Models\ProfessionModel;
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
 
 class EmployeeController extends Controller
 {
     public function index()
     {
-        $listemployee = EmployeeModel::all();
-        $listprofession = ProfessionModel::where('status',1)->get();
-        return view('admin.employee',['listemployee'=> $listemployee, 'listprofession'=>$listprofession]);
+        $listemployee = DB::table('employee')
+            ->select('employee.*', 'profession.profession')
+            ->leftjoin('profession', 'employeeprofession', '=', 'profession.id')
+            ->get();
+
+        $listprofession = ProfessionModel::where('status', 1)->get();
+        return view('admin.employee', ['listemployee' => $listemployee, 'listprofession' => $listprofession]);
     }
 
     public function store(Request $request)
@@ -29,15 +34,15 @@ class EmployeeController extends Controller
         $newSignature = '';
         $newAvatar = '';
 
-        if ($request->file('employeesignature') AND $request->file('employeeavatar')) {
+        if ($request->file('employeesignature') && $request->file('employeeavatar')) {
 
             $extension = $request->file('employeesignature')->getClientOriginalExtension();
-            $newSignature = $request->employeename . '-' . now()->timestamp . '.' . $extension;
+            $newSignature = $request->employeename . 'signature' . '-' . now()->timestamp . '.' . $extension;
             $request->file('employeesignature')->storeAs('employeesignature', $newSignature);
             $request['employeesignature'] = $newSignature;
 
             $extension = $request->file('employeeavatar')->getClientOriginalExtension();
-            $newAvatar = $request->employeename . '-' . now()->timestamp . '.' . $extension;
+            $newAvatar = $request->employeename . 'avatar' . '-' . now()->timestamp . '.' . $extension;
             $request->file('employeeavatar')->storeAs('employeeavatar', $newAvatar);
             $request['employeeavatar'] = $newAvatar;
 
@@ -45,14 +50,14 @@ class EmployeeController extends Controller
                 'employeename'      => $request->employeename,
                 'employeeaddress'   => $request->employeeaddress,
                 'employeecontact'   => $request->employeecontact,
-                'employeeprofession'=> $request->employeeprofession,
+                'employeeprofession' => $request->employeeprofession,
                 'status'            => $request->status,
-                'employesignature'  => $newSignature,
-                'employeeavatar'    => $newAvatar, 
+                'employeesignature'  => $newSignature,
+                'employeeavatar'    => $newAvatar,
             ]);
-        }elseif($request->file('employeesignature')){
+        } elseif ($request->file('employeesignature')) {
             $extension = $request->file('employeesignature')->getClientOriginalExtension();
-            $newSignature = $request->employeename . '-' . now()->timestamp . '.' . $extension;
+            $newSignature = $request->employeename . 'signature' . '-' . now()->timestamp . '.' . $extension;
             $request->file('employeesignature')->storeAs('employeesignature', $newSignature);
             $request['employeesignature'] = $newSignature;
 
@@ -60,13 +65,13 @@ class EmployeeController extends Controller
                 'employeename'      => $request->employeename,
                 'employeeaddress'   => $request->employeeaddress,
                 'employeecontact'   => $request->employeecontact,
-                'employeeprofession'=> $request->employeeprofession,
+                'employeeprofession' => $request->employeeprofession,
                 'status'            => $request->status,
-                'employesignature'  => $newSignature,
+                'employeesignature'  => $newSignature,
             ]);
-        }elseif($request->file('employeeavatar')){
+        } elseif ($request->file('employeeavatar')) {
             $extension = $request->file('employeeavatar')->getClientOriginalExtension();
-            $newAvatar = $request->employeename . '-' . now()->timestamp . '.' . $extension;
+            $newAvatar = $request->employeename . 'avatar' . '-' . now()->timestamp . '.' . $extension;
             $request->file('employeeavatar')->storeAs('employeeavatar', $newAvatar);
             $request['employeeavatar'] = $newAvatar;
 
@@ -74,20 +79,20 @@ class EmployeeController extends Controller
                 'employeename'      => $request->employeename,
                 'employeeaddress'   => $request->employeeaddress,
                 'employeecontact'   => $request->employeecontact,
-                'employeeprofession'=> $request->employeeprofession,
+                'employeeprofession' => $request->employeeprofession,
                 'status'            => $request->status,
-                'employeeavatar'    => $newAvatar, 
+                'employeeavatar'    => $newAvatar,
             ]);
-        }else{
+        } else {
             EmployeeModel::create([
                 'employeename'      => $request->employeename,
                 'employeeaddress'   => $request->employeeaddress,
                 'employeecontact'   => $request->employeecontact,
-                'employeeprofession'=> $request->employeeprofession,
+                'employeeprofession' => $request->employeeprofession,
                 'status'            => $request->status
             ]);
         }
-        return redirect('employee')->with('success','Data Success Di Simpan !');
+        return redirect('employee')->with('success', 'Data Success Di Simpan !');
 
         dd($request);
     }

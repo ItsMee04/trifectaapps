@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class EmployeeModel extends Model
 {
@@ -19,4 +20,9 @@ class EmployeeModel extends Model
         'employeeavatar',
         'status',
     ];
+
+    public function profession(): HasOne
+    {
+        return $this->hasOne(ProfessionModel::class);
+    }
 }
