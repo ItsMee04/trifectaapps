@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 05, 2024 at 12:38 AM
--- Server version: 10.4.28-MariaDB
--- PHP Version: 8.2.4
+-- Generation Time: Feb 05, 2024 at 04:27 PM
+-- Server version: 10.4.32-MariaDB
+-- PHP Version: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -47,6 +47,51 @@ INSERT INTO `categories` (`id`, `categories`, `description`, `status`, `created_
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `customer`
+--
+
+CREATE TABLE `customer` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `customername` varchar(255) NOT NULL,
+  `customeraddress` text NOT NULL,
+  `customercontact` varchar(255) NOT NULL,
+  `customeridentity` varchar(255) NOT NULL,
+  `customerpoint` int(11) NOT NULL DEFAULT 0,
+  `customerdateofbirth` date NOT NULL,
+  `status` int(11) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `customer`
+--
+
+INSERT INTO `customer` (`id`, `customername`, `customeraddress`, `customercontact`, `customeridentity`, `customerpoint`, `customerdateofbirth`, `status`, `created_at`, `updated_at`) VALUES
+(1, 'Yoga Tri Utomo', 'Pabuaran', '0815-1236-4590', '3302260405970001', 5, '1997-05-07', 1, '2024-02-05 03:55:07', '2024-02-05 05:13:56');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `employee`
+--
+
+CREATE TABLE `employee` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `employeename` varchar(255) NOT NULL,
+  `employeeaddress` text NOT NULL,
+  `employeecontact` varchar(255) NOT NULL,
+  `employeeprofession` int(11) NOT NULL,
+  `employeesignature` varchar(255) NOT NULL,
+  `employeeavatar` varchar(255) NOT NULL,
+  `status` int(11) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `failed_jobs`
 --
 
@@ -84,7 +129,10 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (9, '2024_01_31_103741_create_profession_table', 2),
 (10, '2024_02_01_122344_create_categories_table', 3),
 (12, '2024_02_01_142042_create_typeproduct_table', 4),
-(13, '2024_02_01_160748_create_product_table', 5);
+(13, '2024_02_01_160748_create_product_table', 5),
+(14, '2024_02_05_092831_create_supplier_table', 6),
+(17, '2024_02_05_102137_create_customer_table', 7),
+(18, '2024_02_05_110540_create_employee_table', 8);
 
 -- --------------------------------------------------------
 
@@ -171,6 +219,29 @@ INSERT INTO `profession` (`id`, `profession`, `status`, `created_at`, `updated_a
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `supplier`
+--
+
+CREATE TABLE `supplier` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `suppliername` varchar(255) NOT NULL,
+  `supplieraddress` text NOT NULL,
+  `suppliercontact` varchar(255) NOT NULL,
+  `status` int(11) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `supplier`
+--
+
+INSERT INTO `supplier` (`id`, `suppliername`, `supplieraddress`, `suppliercontact`, `status`, `created_at`, `updated_at`) VALUES
+(1, 'Central Musik Purwokerto', 'Roxy Square Building\r\nLt LG blok C6 no3 Purwokerto – Banyumas', '0857-1692-8889', 1, '2024-02-05 03:05:29', '2024-02-05 03:17:56');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `typeproduct`
 --
 
@@ -228,6 +299,18 @@ ALTER TABLE `categories`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `customer`
+--
+ALTER TABLE `customer`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `employee`
+--
+ALTER TABLE `employee`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `failed_jobs`
 --
 ALTER TABLE `failed_jobs`
@@ -267,6 +350,12 @@ ALTER TABLE `profession`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `supplier`
+--
+ALTER TABLE `supplier`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `typeproduct`
 --
 ALTER TABLE `typeproduct`
@@ -289,6 +378,18 @@ ALTER TABLE `categories`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
+-- AUTO_INCREMENT for table `customer`
+--
+ALTER TABLE `customer`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `employee`
+--
+ALTER TABLE `employee`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `failed_jobs`
 --
 ALTER TABLE `failed_jobs`
@@ -298,7 +399,7 @@ ALTER TABLE `failed_jobs`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT for table `personal_access_tokens`
@@ -317,6 +418,12 @@ ALTER TABLE `product`
 --
 ALTER TABLE `profession`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `supplier`
+--
+ALTER TABLE `supplier`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `typeproduct`
