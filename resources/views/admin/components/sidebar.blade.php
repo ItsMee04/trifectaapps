@@ -16,7 +16,7 @@
                         <li class="submenu">
                             <a href="javascript:void(0);"
                                 class="
-                            @if (request()->route()->uri == 'profession' || request()->route()->uri == 'categories') active subdrop @endif">
+                            @if (request()->route()->uri == 'profession' || request()->route()->uri == 'categories' || request()->route()->uri == 'typeproduct') active subdrop @endif">
                                 <i data-feather="server"></i><span>Reference</span><span class="menu-arrow"></span></a>
                             <ul>
                                 <li><a href="/profession"
@@ -46,7 +46,7 @@
                                         Barcode</a></li>
                             </ul>
                         </li>
-                        <li><a href="/suplier" class="@if (request()->route()->uri == 'suplier' || request()->route()->uri == 'edit-suplier/{id}') active @endif"><i
+                        <li><a href="/supplier" class="@if (request()->route()->uri == 'supplier') active @endif"><i
                                     data-feather="codepen"></i><span>Suplier</span></a></li>
                         <li><a href="/customer" class="@if (request()->route()->uri == 'customer' || request()->route()->uri == 'edit-customer/{id}') active @endif"><i
                                     data-feather="users"></i><span>Customer</span></a></li>
@@ -58,7 +58,7 @@
                         <li class="submenu">
                             <a href="javascript:void(0);"
                                 class="
-                            @if (request()->route()->uri == 'karyawan' ||
+                            @if (request()->route()->uri == 'employee' ||
                                     request()->route()->uri == 'edit-karyawan/{id}' ||
                                     request()->route()->uri == 'users' ||
                                     request()->route()->uri == 'edit-users/{id}' ||
@@ -67,8 +67,8 @@
                                     data-feather="users"></i><span>Manage Users</span><span
                                     class="menu-arrow"></span></a>
                             <ul>
-                                <li><a href="/karyawan"
-                                        class="@if (request()->route()->uri == 'karyawan' || request()->route()->uri == 'edit-karyawan/{id}') active @endif">Karyawan </a></li>
+                                <li><a href="/employee"
+                                        class="@if (request()->route()->uri == 'employee' || request()->route()->uri == 'edit-karyawan/{id}') active @endif">Employee </a></li>
                                 <li><a href="/users" class="@if (request()->route()->uri == 'users') active @endif">Users
                                         Karyawan</a></li>
                             </ul>

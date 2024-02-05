@@ -9,9 +9,14 @@ use Illuminate\Database\Query\IndexHint;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\CategoriesController;
+use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\PdfController;
 use App\Http\Controllers\ProfessionController;
+use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\TypeproductController;
+use App\Models\CustomerModel;
+use App\Models\EmployeeModel;
 use App\Models\ProductModel;
 use Barryvdh\DomPDF\Facade\Pdf;
 
@@ -67,6 +72,23 @@ Route::middleware('auth')->group(function () {
         Route::get('delete-product/{id}', [ProductController::class, 'delete']);
         Route::get('printbarcode/{id}', [PdfController::class, 'printbarcode']);
         Route::get('scanbarcode', [BarcodeController::class, 'index']);
+        Route::post('scanbarcodevalidasi', [BarcodeController::class, 'scanbarcodevalidasi']);
+
+        //route suplier
+        Route::get('supplier',[SupplierController::class, 'index']);
+        Route::post('supplier',[SupplierController::class, 'store']);
+        Route::post('supplier/{id}',[SupplierController::class, 'update']);
+        Route::get('supplier/{id}',[SupplierController::class, 'delete']);
+
+        //route customer
+        Route::get('customer',[CustomerController::class, 'index']);
+        Route::post('customer',[CustomerController::class, 'store']);
+        Route::post('customer/{id}',[CustomerController::class, 'update']);
+        Route::get('customer/{id}',[CustomerController::class, 'delete']);
+
+        //route employee
+        Route::get('employee',[EmployeeController::class, 'index']);
+        Route::post('employee',[EmployeeController::class, 'store']);
 
         //route logout
         Route::get('logout', [AuthController::class, 'logout']);

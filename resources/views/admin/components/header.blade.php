@@ -5,9 +5,6 @@
         <a href="/dashboard" class="logo logo-normal">
             <img src="{{ asset('assets') }}/img/logo.png" alt="">
         </a>
-        <a href="/dashboard" class="logo logo-white">
-            <img src="{{ asset('assets') }}/img/logo-white.png" alt="">
-        </a>
         <a href="/dashboard" class="logo-small">
             <img src="{{ asset('assets') }}/img/logo-small.png" alt="">
         </a>
