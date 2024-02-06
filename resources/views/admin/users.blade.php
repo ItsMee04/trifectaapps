@@ -89,7 +89,7 @@
                                                     data-toggle="tooltip" data-placement="top" title="EDIT DATA">
                                             </a>
                                             <a class="confirm-text" href="javascript:void(0);"
-                                                onclick="confirm_modal('users/{{ $item->id }}');">
+                                                onclick="confirm_modal('users/{{ $item->iduser }}');">
                                                 <img src="{{ asset('assets') }}/img/icons/delete.svg" alt="img"
                                                     data-toggle="tooltip" data-placement="top" title="DELETE DATA">
                                             </a>

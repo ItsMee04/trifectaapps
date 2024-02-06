@@ -84,7 +84,7 @@ class UserController extends Controller
 
     public function delete(Request $request, $id)
     {
-        $ceklogin = Auth::user()->id;
+        $ceklogin = Auth::user()->iduser;
         if ($ceklogin == $id) {
             User::where('id', $id)->delete();
 
