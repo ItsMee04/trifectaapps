@@ -7,7 +7,9 @@ use App\Models\EmployeeModel;
 use App\Models\ProfessionModel;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use Illuminate\Support\Facades\File;
+use Workbench\App\Models\User as ModelsUser;
 
 class EmployeeController extends Controller
 {
@@ -198,5 +200,22 @@ class EmployeeController extends Controller
                 ]);
         }
         return redirect('employee')->with('success', 'Data Success Di Update !');
+    }
+
+    public function delete($id)
+    {
+        $listemployee = EmployeeModel::where('id', $id)->first();
+        $listusers    = User::where('iduser', $id)->first()->id;
+
+        $deleteemployee = EmployeeModel::where('id',$id)->delete();
+
+        if($listusers != null)
+        {
+            if ($deleteemployee) {
+                User::where('iduser',$id)->delete();
+            }
+        }
+    
+        return redirect('employee')->with('success', 'Data Success Diahpus !');
     }
 }

@@ -101,7 +101,7 @@
                                                     data-toggle="tooltip" data-placement="top" title="USERS DATA">
                                             </a>
                                             <a class="confirm-text" href="javascript:void(0);"
-                                                onclick="confirm_modal('employee/{{ $item->id }}');">
+                                                onclick="confirm_modal('delete-employee/{{ $item->id }}');">
                                                 <img src="{{ asset('assets') }}/img/icons/delete.svg" alt="img"
                                                     data-toggle="tooltip" data-placement="top" title="DELETE DATA">
                                             </a>
@@ -219,11 +219,10 @@
 
     <!-- Modal Popup untuk delete-->
     <div class="modal custom-modal fade" id="modal_delete">
-        <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-dialog modal-sm modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title" style="text-align: center"><b>APAKAH ANDA YAKIN AKAN MENGHAPUS DATA
-                            INI ?</b></h4>
+                    <h4 class="modal-title" style="text-align: center"><b>DELETE THIS DATA ?</b></h4>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"><span
                             aria-hidden="true">×</span></button>
                 </div>
