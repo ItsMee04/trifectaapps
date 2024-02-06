@@ -7,6 +7,7 @@ use App\Models\EmployeeModel;
 use App\Models\ProfessionModel;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\File;
 
 class EmployeeController extends Controller
 {
@@ -93,7 +94,109 @@ class EmployeeController extends Controller
             ]);
         }
         return redirect('employee')->with('success', 'Data Success Di Simpan !');
+    }
 
-        dd($request);
+    public function show($id)
+    {
+        $listemployee = EmployeeModel::where('id',$id)->first();
+        $listprofession = ProfessionModel::all();
+
+        return view('admin.editpage.edit-employee',['listemployee'=>$listemployee,'listprofession'=>$listprofession]);
+    }
+
+    public function update(Request $request, $id)
+    {
+        $listemployee = EmployeeModel::where('id', $id)->first();
+        $validate = $request->validate([
+            'employeename'          =>  'required',
+            'employeecontact'       =>  'required',
+            'employeeprofession'    =>  'required',
+            'status'                =>  'required',
+            'employeeaddress'       =>  'required',
+        ]);
+
+        if ($request->file('employeesignature') && $request->file('employeeavatar')) {
+
+            $pathsignature  = 'storage/employeesignature/' . $listemployee->employeesignature;
+            $pathavatar     = 'storage/employeeavatar/' . $listemployee->employeeavatar;
+
+            if (File::exists($pathsignature, $pathavatar)) {
+                File::delete($pathsignature, $pathavatar);
+            }
+
+            $extension = $request->file('employeesignature')->getClientOriginalExtension();
+            $newSignature = $request->employeename . 'signature' . '-' . now()->timestamp . '.' . $extension;
+            $request->file('employeesignature')->storeAs('employeesignature', $newSignature);
+            $request['employeesignature'] = $newSignature;
+
+            $extension = $request->file('employeeavatar')->getClientOriginalExtension();
+            $newAvatar = $request->employeename . 'avatar' . '-' . now()->timestamp . '.' . $extension;
+            $request->file('employeeavatar')->storeAs('employeeavatar', $newAvatar);
+            $request['employeeavatar'] = $newAvatar;
+
+            EmployeeModel::where('id', $id)
+                ->update([
+                    'employeename'      => $request->employeename,
+                    'employeeaddress'   => $request->employeeaddress,
+                    'employeecontact'   => $request->employeecontact,
+                    'employeeprofession' => $request->employeeprofession,
+                    'status'            => $request->status,
+                    'employeesignature'  => $newSignature,
+                    'employeeavatar'    => $newAvatar,
+                ]);
+        }elseif($request->file('employeesignature')){
+            $pathsignature  = 'storage/employeesignature/' . $listemployee->employeesignature;
+
+            if (File::exists($pathsignature)) {
+                File::delete($pathsignature);
+            }
+
+            $extension = $request->file('employeesignature')->getClientOriginalExtension();
+            $newSignature = $request->employeename . 'signature' . '-' . now()->timestamp . '.' . $extension;
+            $request->file('employeesignature')->storeAs('employeesignature', $newSignature);
+            $request['employeesignature'] = $newSignature;
+
+            EmployeeModel::where('id', $id)
+                ->update([
+                    'employeename'      => $request->employeename,
+                    'employeeaddress'   => $request->employeeaddress,
+                    'employeecontact'   => $request->employeecontact,
+                    'employeeprofession' => $request->employeeprofession,
+                    'status'            => $request->status,
+                    'employeesignature'  => $newSignature,
+                ]);
+        }elseif($request->file('employeeavatar'))
+        {
+            $pathavatar     = 'storage/employeeavatar/' . $listemployee->employeeavatar;
+
+            if (File::exists($pathavatar)) {
+                File::delete($pathavatar);
+            }
+
+            $extension = $request->file('employeeavatar')->getClientOriginalExtension();
+            $newAvatar = $request->employeename . 'avatar' . '-' . now()->timestamp . '.' . $extension;
+            $request->file('employeeavatar')->storeAs('employeeavatar', $newAvatar);
+            $request['employeeavatar'] = $newAvatar;
+
+            EmployeeModel::where('id', $id)
+                ->update([
+                    'employeename'      => $request->employeename,
+                    'employeeaddress'   => $request->employeeaddress,
+                    'employeecontact'   => $request->employeecontact,
+                    'employeeprofession' => $request->employeeprofession,
+                    'status'            => $request->status,
+                    'employeeavatar'    => $newAvatar,
+                ]);
+        }else{
+            EmployeeModel::where('id', $id)
+                ->update([
+                    'employeename'      => $request->employeename,
+                    'employeeaddress'   => $request->employeeaddress,
+                    'employeecontact'   => $request->employeecontact,
+                    'employeeprofession' => $request->employeeprofession,
+                    'status'            => $request->status
+                ]);
+        }
+        return redirect('employee')->with('success', 'Data Success Di Update !');
     }
 }

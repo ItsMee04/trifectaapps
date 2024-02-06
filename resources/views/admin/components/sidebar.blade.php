@@ -59,7 +59,7 @@
                             <a href="javascript:void(0);"
                                 class="
                             @if (request()->route()->uri == 'employee' ||
-                                    request()->route()->uri == 'edit-karyawan/{id}' ||
+                                    request()->route()->uri == 'employee/{id}' ||
                                     request()->route()->uri == 'users' ||
                                     request()->route()->uri == 'edit-users/{id}' ||
                                     request()->route()->uri == 'kontak' ||
@@ -68,7 +68,7 @@
                                     class="menu-arrow"></span></a>
                             <ul>
                                 <li><a href="/employee"
-                                        class="@if (request()->route()->uri == 'employee' || request()->route()->uri == 'edit-karyawan/{id}') active @endif">Employee </a></li>
+                                        class="@if (request()->route()->uri == 'employee' || request()->route()->uri == 'employee/{id}') active @endif">Employee </a></li>
                                 <li><a href="/users" class="@if (request()->route()->uri == 'users') active @endif">Users
                                         Karyawan</a></li>
                             </ul>

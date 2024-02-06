@@ -91,7 +91,7 @@
                                             @endif
                                         </td>
                                         <td>
-                                            <a class="me-3" href="employee/{{ $item->id }}">
+                                            <a class="me-3" href="/employee/{{ $item->id }}">
                                                 <img src="{{ asset('assets') }}/img/icons/edit.svg" alt="img"
                                                     data-toggle="tooltip" data-placement="top" title="EDIT DATA">
                                             </a>
@@ -108,7 +108,6 @@
                                         </td>
                                     </tr>
                                     <!-- MODAL ADD USERS -->
-                                    {{-- @include('admin.pages.users-karyawan') --}}
                                 @endforeach
                             </tbody>
                         </table>
