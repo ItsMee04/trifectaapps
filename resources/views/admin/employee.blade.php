@@ -108,6 +108,7 @@
                                         </td>
                                     </tr>
                                     <!-- MODAL ADD USERS -->
+                                    @include('admin.postpage.users-employee');
                                 @endforeach
                             </tbody>
                         </table>

@@ -7,6 +7,7 @@ use App\Models\EmployeeModel;
 use App\Models\ProfessionModel;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use App\Models\RoleModel;
 use App\Models\User;
 use Illuminate\Support\Facades\File;
 use Workbench\App\Models\User as ModelsUser;
@@ -21,7 +22,10 @@ class EmployeeController extends Controller
             ->get();
 
         $listprofession = ProfessionModel::where('status', 1)->get();
-        return view('admin.employee', ['listemployee' => $listemployee, 'listprofession' => $listprofession]);
+
+        $listrole = RoleModel::where('role', '!=', 'Admin')->where('status', 1)->get();
+
+        return view('admin.employee', ['listemployee' => $listemployee, 'listprofession' => $listprofession, 'listrole' => $listrole]);
     }
 
     public function store(Request $request)
@@ -100,10 +104,10 @@ class EmployeeController extends Controller
 
     public function show($id)
     {
-        $listemployee = EmployeeModel::where('id',$id)->first();
+        $listemployee = EmployeeModel::where('id', $id)->first();
         $listprofession = ProfessionModel::all();
 
-        return view('admin.editpage.edit-employee',['listemployee'=>$listemployee,'listprofession'=>$listprofession]);
+        return view('admin.editpage.edit-employee', ['listemployee' => $listemployee, 'listprofession' => $listprofession]);
     }
 
     public function update(Request $request, $id)
@@ -146,7 +150,7 @@ class EmployeeController extends Controller
                     'employeesignature'  => $newSignature,
                     'employeeavatar'    => $newAvatar,
                 ]);
-        }elseif($request->file('employeesignature')){
+        } elseif ($request->file('employeesignature')) {
             $pathsignature  = 'storage/employeesignature/' . $listemployee->employeesignature;
 
             if (File::exists($pathsignature)) {
@@ -167,8 +171,7 @@ class EmployeeController extends Controller
                     'status'            => $request->status,
                     'employeesignature'  => $newSignature,
                 ]);
-        }elseif($request->file('employeeavatar'))
-        {
+        } elseif ($request->file('employeeavatar')) {
             $pathavatar     = 'storage/employeeavatar/' . $listemployee->employeeavatar;
 
             if (File::exists($pathavatar)) {
@@ -189,7 +192,7 @@ class EmployeeController extends Controller
                     'status'            => $request->status,
                     'employeeavatar'    => $newAvatar,
                 ]);
-        }else{
+        } else {
             EmployeeModel::where('id', $id)
                 ->update([
                     'employeename'      => $request->employeename,
@@ -207,15 +210,14 @@ class EmployeeController extends Controller
         $listemployee = EmployeeModel::where('id', $id)->first();
         $listusers    = User::where('iduser', $id)->first()->id;
 
-        $deleteemployee = EmployeeModel::where('id',$id)->delete();
+        $deleteemployee = EmployeeModel::where('id', $id)->delete();
 
-        if($listusers != null)
-        {
+        if ($listusers != null) {
             if ($deleteemployee) {
-                User::where('iduser',$id)->delete();
+                User::where('iduser', $id)->delete();
             }
         }
-    
+
         return redirect('employee')->with('success', 'Data Success Diahpus !');
     }
 }

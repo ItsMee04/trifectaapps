@@ -1,24 +1,27 @@
 <?php
 
-use App\Models\CategoriesModel;
-use App\Models\ProfessionModel;
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\AuthController;
-use App\Http\Controllers\BarcodeController;
-use Illuminate\Database\Query\IndexHint;
-use App\Http\Controllers\ProductController;
-use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\CategoriesController;
-use App\Http\Controllers\CustomerController;
-use App\Http\Controllers\EmployeeController;
-use App\Http\Controllers\PdfController;
-use App\Http\Controllers\ProfessionController;
-use App\Http\Controllers\SupplierController;
-use App\Http\Controllers\TypeproductController;
+use App\Models\User;
+use App\Models\ProductModel;
 use App\Models\CustomerModel;
 use App\Models\EmployeeModel;
-use App\Models\ProductModel;
+use App\Models\CategoriesModel;
+use App\Models\ProfessionModel;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PdfController;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\RoleController;
+use App\Http\Controllers\UserController;
+use Illuminate\Database\Query\IndexHint;
+use App\Http\Controllers\BarcodeController;
+use App\Http\Controllers\ProductController;
+use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\EmployeeController;
+use App\Http\Controllers\SupplierController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\CategoriesController;
+use App\Http\Controllers\ProfessionController;
+use App\Http\Controllers\TypeproductController;
 
 /*
 |--------------------------------------------------------------------------
@@ -63,6 +66,12 @@ Route::middleware('auth')->group(function () {
         Route::post('typeproduct/{id}', [TypeproductController::class, 'update']);
         Route::get('typeproduct/{id}', [TypeproductController::class, 'delete']);
 
+        //route role
+        Route::get('role', [RoleController::class, 'index']);
+        Route::post('role', [RoleController::class, 'store']);
+        Route::post('role/{id}', [RoleController::class, 'update']);
+        Route::get('role/{id}', [RoleController::class, 'delete']);
+
         //route product
         Route::get('product', [ProductController::class, 'index']);
         Route::post('product', [ProductController::class, 'store']);
@@ -75,23 +84,29 @@ Route::middleware('auth')->group(function () {
         Route::post('scanbarcodevalidasi', [BarcodeController::class, 'scanbarcodevalidasi']);
 
         //route suplier
-        Route::get('supplier',[SupplierController::class, 'index']);
-        Route::post('supplier',[SupplierController::class, 'store']);
-        Route::post('supplier/{id}',[SupplierController::class, 'update']);
-        Route::get('supplier/{id}',[SupplierController::class, 'delete']);
+        Route::get('supplier', [SupplierController::class, 'index']);
+        Route::post('supplier', [SupplierController::class, 'store']);
+        Route::post('supplier/{id}', [SupplierController::class, 'update']);
+        Route::get('supplier/{id}', [SupplierController::class, 'delete']);
 
         //route customer
-        Route::get('customer',[CustomerController::class, 'index']);
-        Route::post('customer',[CustomerController::class, 'store']);
-        Route::post('customer/{id}',[CustomerController::class, 'update']);
-        Route::get('customer/{id}',[CustomerController::class, 'delete']);
+        Route::get('customer', [CustomerController::class, 'index']);
+        Route::post('customer', [CustomerController::class, 'store']);
+        Route::post('customer/{id}', [CustomerController::class, 'update']);
+        Route::get('customer/{id}', [CustomerController::class, 'delete']);
 
         //route employee
-        Route::get('employee',[EmployeeController::class, 'index']);
-        Route::post('employee',[EmployeeController::class, 'store']);
-        Route::get('employee/{id}',[EmployeeController::class, 'show']);
-        Route::post('employee/{id}',[EmployeeController::class, 'update']);
-        Route::get('delete-employee/{id}',[EmployeeController::class, 'delete']);
+        Route::get('employee', [EmployeeController::class, 'index']);
+        Route::post('employee', [EmployeeController::class, 'store']);
+        Route::get('employee/{id}', [EmployeeController::class, 'show']);
+        Route::post('employee/{id}', [EmployeeController::class, 'update']);
+        Route::get('delete-employee/{id}', [EmployeeController::class, 'delete']);
+
+        //route users
+        Route::get('users', [UserController::class, 'index']);
+        Route::post('add-users/{id}', [UserController::class, 'store']);
+        Route::post('users/{id}', [UserController::class, 'update']);
+        Route::get('users/{id}', [UserController::class, 'delete']);
 
         //route logout
         Route::get('logout', [AuthController::class, 'logout']);

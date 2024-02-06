@@ -16,7 +16,10 @@
                         <li class="submenu">
                             <a href="javascript:void(0);"
                                 class="
-                            @if (request()->route()->uri == 'profession' || request()->route()->uri == 'categories' || request()->route()->uri == 'typeproduct') active subdrop @endif">
+                            @if (request()->route()->uri == 'profession' ||
+                                    request()->route()->uri == 'categories' ||
+                                    request()->route()->uri == 'typeproduct' ||
+                                    request()->route()->uri == 'role') active subdrop @endif">
                                 <i data-feather="server"></i><span>Reference</span><span class="menu-arrow"></span></a>
                             <ul>
                                 <li><a href="/profession"
@@ -26,6 +29,9 @@
                                 </li>
                                 <li><a href="/typeproduct" class="@if (request()->route()->uri == 'typeproduct') active @endif">Type
                                         Product</a>
+                                </li>
+                                <li><a href="/role" class="@if (request()->route()->uri == 'role') active @endif">Access
+                                        Role</a>
                                 </li>
                             </ul>
                         </li>
@@ -61,16 +67,14 @@
                             @if (request()->route()->uri == 'employee' ||
                                     request()->route()->uri == 'employee/{id}' ||
                                     request()->route()->uri == 'users' ||
-                                    request()->route()->uri == 'edit-users/{id}' ||
-                                    request()->route()->uri == 'kontak' ||
-                                    request()->route()->uri == 'edit-kontak/{id}') active subdrop @endif"><i
+                                    request()->route()->uri == 'edit-users/{id}') active subdrop @endif"><i
                                     data-feather="users"></i><span>Manage Users</span><span
                                     class="menu-arrow"></span></a>
                             <ul>
                                 <li><a href="/employee"
                                         class="@if (request()->route()->uri == 'employee' || request()->route()->uri == 'employee/{id}') active @endif">Employee </a></li>
-                                <li><a href="/users" class="@if (request()->route()->uri == 'users') active @endif">Users
-                                        Karyawan</a></li>
+                                <li><a href="/users" class="@if (request()->route()->uri == 'users') active @endif">Employee
+                                        Users</a></li>
                             </ul>
                         </li>
                     </ul>
