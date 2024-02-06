@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 05, 2024 at 04:27 PM
--- Server version: 10.4.32-MariaDB
--- PHP Version: 8.2.12
+-- Generation Time: Feb 06, 2024 at 09:04 PM
+-- Server version: 10.4.28-MariaDB
+-- PHP Version: 8.2.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -89,6 +89,14 @@ CREATE TABLE `employee` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Dumping data for table `employee`
+--
+
+INSERT INTO `employee` (`id`, `employeename`, `employeeaddress`, `employeecontact`, `employeeprofession`, `employeesignature`, `employeeavatar`, `status`, `created_at`, `updated_at`) VALUES
+(2, 'Indra Kusuma', 'Purwokerto', '081390469322', 2, 'Indra Kusumasignature-1707245746.png', 'Indra Kusumaavatar-1707245746.jpg', 1, '2024-02-05 12:55:03', '2024-02-06 11:55:46'),
+(4, 'Dimas Anugerah Adibrata', 'Purbalingga', '081390469322', 2, 'Dimas Anugerah Adibratasignature-1707248128.png', 'Dimas Anugerah Adibrataavatar-1707248128.png', 1, '2024-02-06 12:35:28', '2024-02-06 12:35:28');
+
 -- --------------------------------------------------------
 
 --
@@ -132,7 +140,8 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (13, '2024_02_01_160748_create_product_table', 5),
 (14, '2024_02_05_092831_create_supplier_table', 6),
 (17, '2024_02_05_102137_create_customer_table', 7),
-(18, '2024_02_05_110540_create_employee_table', 8);
+(18, '2024_02_05_110540_create_employee_table', 8),
+(19, '2024_02_06_175421_create_role_table', 9);
 
 -- --------------------------------------------------------
 
@@ -215,6 +224,29 @@ CREATE TABLE `profession` (
 INSERT INTO `profession` (`id`, `profession`, `status`, `created_at`, `updated_at`) VALUES
 (2, 'KEPALA TOKO', 1, '2024-01-31 03:55:49', '2024-01-31 03:55:49'),
 (4, 'KARYAWAN', 1, '2024-02-01 08:09:04', '2024-02-01 08:09:04');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `role`
+--
+
+CREATE TABLE `role` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `role` varchar(255) NOT NULL,
+  `status` int(11) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `role`
+--
+
+INSERT INTO `role` (`id`, `role`, `status`, `created_at`, `updated_at`) VALUES
+(1, 'Admin', 1, '2024-02-06 11:29:02', '2024-02-06 11:29:02'),
+(2, 'KEPALA TOKO', 1, '2024-02-06 11:30:05', '2024-02-06 11:30:05'),
+(3, 'KARYAWAN', 1, '2024-02-06 11:31:59', '2024-02-06 11:53:52');
 
 -- --------------------------------------------------------
 
@@ -350,6 +382,12 @@ ALTER TABLE `profession`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `role`
+--
+ALTER TABLE `role`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `supplier`
 --
 ALTER TABLE `supplier`
@@ -387,7 +425,7 @@ ALTER TABLE `customer`
 -- AUTO_INCREMENT for table `employee`
 --
 ALTER TABLE `employee`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `failed_jobs`
@@ -399,7 +437,7 @@ ALTER TABLE `failed_jobs`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT for table `personal_access_tokens`
@@ -420,6 +458,12 @@ ALTER TABLE `profession`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
+-- AUTO_INCREMENT for table `role`
+--
+ALTER TABLE `role`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
 -- AUTO_INCREMENT for table `supplier`
 --
 ALTER TABLE `supplier`
@@ -435,7 +479,7 @@ ALTER TABLE `typeproduct`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
