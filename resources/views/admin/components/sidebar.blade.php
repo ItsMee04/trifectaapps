@@ -5,7 +5,7 @@
                 <li class="submenu-open">
                     <h6 class="submenu-hdr">Main</h6>
                     <ul>
-                        <li class="@if (request()->route()->uri == 'dashboard') active @endif">
+                        <li class="@if (request()->route()->uri == 'dashboard-admin') active @endif">
                             <a href="/dashboard-admin"><i data-feather="grid"></i><span>Dashboard</span></a>
                         </li>
                     </ul>

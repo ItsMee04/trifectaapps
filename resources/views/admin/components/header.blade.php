@@ -2,10 +2,10 @@
 
     <!-- Logo -->
     <div class="header-left active">
-        <a href="/dashboard" class="logo logo-normal">
+        <a href="/dashboard-admin" class="logo logo-normal">
             <img src="{{ asset('assets') }}/img/logo.png" alt="">
         </a>
-        <a href="/dashboard" class="logo-small">
+        <a href="/dashboard-admin" class="logo-small">
             <img src="{{ asset('assets') }}/img/logo-small.png" alt="">
         </a>
         <a id="toggle_btn" href="javascript:void(0);">
@@ -182,22 +182,24 @@
             <a href="javascript:void(0);" class="dropdown-toggle nav-link userset" data-bs-toggle="dropdown">
                 <span class="user-info">
                     <span class="user-letter">
-                        <img src="{{ asset('assets') }}/img/avatar.jpg" alt="" class="img-fluid">
+                        <img src="{{ asset('storage/employeeavatar/' . Session::get('employeeavatar')) }}"
+                            alt="avatar">
                     </span>
                     <span class="user-detail">
-                        <span class="user-name">{{ Session::get('nama') }}</span>
-                        <span class="user-role">{{ Session::get('profesi') }}</span>
+                        <span class="user-name">{{ Session::get('employeename') }}</span>
+                        <span class="user-role">{{ Session::get('profession') }}</span>
                     </span>
                 </span>
             </a>
             <div class="dropdown-menu menu-drop-user">
                 <div class="profilename">
                     <div class="profileset">
-                        <span class="user-img"><img src="{{ asset('assets') }}/img/avatar.jpg"
-                                alt="">
+                        <span class="user-img"><img
+                                src="{{ asset('storage/employeeavatar/' . Session::get('employeeavatar')) }}"
+                                alt="avatar">
                             <span class="status online"></span></span>
                         <div class="profilesets">
-                            <h6>{{ Session::get('nama') }}</h6>
+                            <h6>{{ Session::get('employeename') }}</h6>
                             <h5>{{ Session::get('role') }}</h5>
                         </div>
                     </div>

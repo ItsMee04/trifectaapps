@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\RoleModel;
 use Illuminate\Http\Request;
+use App\Models\EmployeeModel;
+use App\Models\ProfessionModel;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 class AuthController extends Controller
 {
@@ -26,10 +30,22 @@ class AuthController extends Controller
             }
 
             if (Auth::user()->status == 1) {
-                if (Auth::user()->role == 1) {
+                if (Auth::user()->role == 1 || Auth::user()->role == 2) {
+                    $employeename           = EmployeeModel::where('id', Auth::user()->iduser)->first()->employeename;
+                    $employeeavatar         = EmployeeModel::where('id', Auth::user()->iduser)->first()->employeeavatar;
+
+                    $employeeprofession     = EmployeeModel::where('id', Auth::user()->iduser)->first()->employeeprofession;
+                    $profession             = ProfessionModel::where('id', $employeeprofession)->first()->profession;
+
+                    $role           = RoleModel::where('id', Auth::user()->role)->first()->role;
+
+                    Session::put('employeename', $employeename);
+                    Session::put('employeeavatar', $employeeavatar);
+                    Session::put('profession', $profession);
+                    Session::put('role', $role);
                     //mengarahkan ke halaman dashboard
                     return redirect('dashboard-admin');
-                } elseif (Auth::user()->role == 2) {
+                } elseif (Auth::user()->role == 3) {
                     //mengarahkan ke halaman dashboard
                     return redirect('dashboard-user');
                 }
