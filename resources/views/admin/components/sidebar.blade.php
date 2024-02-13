@@ -80,15 +80,18 @@
                     </ul>
                 </li>
                 <li class="submenu-open">
-                    <h6 class="submenu-hdr">Sales</h6>
+                    <h6 class="submenu-hdr">Transaction</h6>
                     <ul>
                         <li class="submenu">
-                            <a href="javascript:void(0);"><i
-                                    data-feather="shopping-cart"></i><span>Transaksi</span><span
+                            <a href="javascript:void(0);" class="@if (request()->route()->uri == 'shopping-cart' ||
+                                request()->route()->uri == 'orders/{id}' ||
+                                request()->route()->uri == 'users' ||
+                                request()->route()->uri == 'edit-users/{id}') active subdrop @endif"><i
+                                    data-feather="shopping-cart"></i><span>Transaction</span><span
                                     class="menu-arrow"></span></a>
                             <ul>
-                                <li><a href="/cart-transaksi">Cart Transaksi</a></li>
-                                <li><a href="transferlist.html">Data Transaksi</a></li>
+                                <li><a href="/shopping-cart" class="@if (request()->route()->uri == 'shopping-cart' || request()->route()->uri == 'shopping-cart/{id}') active @endif">Shopping Cart</a></li>
+                                <li><a href="/orders" class="@if (request()->route()->uri == 'orders' || request()->route()->uri == 'orders/{id}') active @endif">Orders</a></li>
                             </ul>
                         </li>
                         <li><a href="invoicereport.html"><i data-feather="file-text"></i><span>Invoices</span></a></li>

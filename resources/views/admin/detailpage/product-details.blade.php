@@ -61,7 +61,7 @@
                                                 Barcode</i></button>
                                     </a>
 
-                                    <a class="printimg" href="/add-cart/{{ $listproduct->codeproduct }}">
+                                    <a class="printimg" href="/add-to-cart/{{ $listproduct->codeproduct }}">
                                         <button type="button" class="btn btn-rounded btn-cancel" data-bs-toggle="tooltip"
                                             data-bs-placement="top" title="Add To Cart"><i class="fas fa-shopping-cart"> Add
                                                 To Cart</i></button>

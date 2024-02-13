@@ -21,6 +21,7 @@ use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\CategoriesController;
 use App\Http\Controllers\ProfessionController;
+use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\TypeproductController;
 
 /*
@@ -107,6 +108,10 @@ Route::middleware('auth')->group(function () {
         Route::post('add-users/{id}', [UserController::class, 'store']);
         Route::post('users/{id}', [UserController::class, 'update']);
         Route::get('users/{id}', [UserController::class, 'delete']);
+
+        //route shopping-cart
+        Route::get('shopping-cart',[TransactionController::class, 'shoppingcart']);
+        Route::get('add-to-cart/{id}',[TransactionController::class, 'addtocart']);
 
         //route logout
         Route::get('logout', [AuthController::class, 'logout']);
