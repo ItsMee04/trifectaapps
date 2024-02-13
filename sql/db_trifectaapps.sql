@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 06, 2024 at 09:04 PM
--- Server version: 10.4.28-MariaDB
--- PHP Version: 8.2.4
+-- Generation Time: Feb 13, 2024 at 09:28 AM
+-- Server version: 10.4.32-MariaDB
+-- PHP Version: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -20,6 +20,30 @@ SET time_zone = "+00:00";
 --
 -- Database: `db_trifectaapps`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `cart`
+--
+
+CREATE TABLE `cart` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `idshoppingcart` varchar(255) NOT NULL,
+  `product` int(11) NOT NULL,
+  `sales` int(11) NOT NULL,
+  `status` int(11) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `cart`
+--
+
+INSERT INTO `cart` (`id`, `idshoppingcart`, `product`, `sales`, `status`, `created_at`, `updated_at`) VALUES
+(1, 'C-2024000001', 1, 2, 1, '2024-02-13 00:56:20', '2024-02-13 00:56:20'),
+(2, 'C-2024000001', 3, 2, 1, '2024-02-13 00:57:01', '2024-02-13 00:57:01');
 
 -- --------------------------------------------------------
 
@@ -94,7 +118,7 @@ CREATE TABLE `employee` (
 --
 
 INSERT INTO `employee` (`id`, `employeename`, `employeeaddress`, `employeecontact`, `employeeprofession`, `employeesignature`, `employeeavatar`, `status`, `created_at`, `updated_at`) VALUES
-(2, 'Indra Kusuma', 'Purwokerto', '081390469322', 2, 'Indra Kusumasignature-1707245746.png', 'Indra Kusumaavatar-1707245746.jpg', 1, '2024-02-05 12:55:03', '2024-02-06 11:55:46'),
+(2, 'Indra Kusuma', 'Purwokerto', '081390469322', 2, 'Indra Kusumasignature-1707477472.png', 'Indra Kusumaavatar-1707477472.jpg', 1, '2024-02-05 12:55:03', '2024-02-09 04:17:52'),
 (4, 'Dimas Anugerah Adibrata', 'Purbalingga', '081390469322', 2, 'Dimas Anugerah Adibratasignature-1707248128.png', 'Dimas Anugerah Adibrataavatar-1707248128.png', 1, '2024-02-06 12:35:28', '2024-02-06 12:35:28');
 
 -- --------------------------------------------------------
@@ -141,7 +165,9 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (14, '2024_02_05_092831_create_supplier_table', 6),
 (17, '2024_02_05_102137_create_customer_table', 7),
 (18, '2024_02_05_110540_create_employee_table', 8),
-(19, '2024_02_06_175421_create_role_table', 9);
+(19, '2024_02_06_175421_create_role_table', 9),
+(20, '2024_02_13_030039_create_transaction_table', 10),
+(21, '2024_02_13_034433_create_cart_table', 11);
 
 -- --------------------------------------------------------
 
@@ -200,8 +226,8 @@ CREATE TABLE `product` (
 --
 
 INSERT INTO `product` (`id`, `codeproduct`, `nameproduct`, `priceproduct`, `descriptionproduct`, `typeproduct`, `weightproduct`, `caratproduct`, `photoproduct`, `status`, `created_at`, `updated_at`) VALUES
-(1, 'P-2024000001', 'Cincin Permata', 2500000, 'Cincin Permata Merah', 1, 1, 24, 'P-2024000001-1707082715.png', 1, '2024-02-03 11:48:47', '2024-02-04 14:38:35'),
-(3, 'P-2024000002', 'Cincin Emas', 2500000, 'Cincin Emas', 1, 1, 24, 'P-2024000002-1707083116.png', 1, '2024-02-04 14:45:16', '2024-02-04 14:45:16');
+(1, 'P-2024000001', 'Cincin Permata', 2500000, 'Cincin Permata Merah', 1, 1, 24, 'P-2024000001-1707792070.png', 1, '2024-02-03 11:48:47', '2024-02-12 19:41:10'),
+(3, 'P-2024000002', 'Cincin Emas', 2500000, 'Cincin Emas', 1, 1, 24, 'P-2024000002-1707792086.png', 1, '2024-02-04 14:45:16', '2024-02-12 19:41:26');
 
 -- --------------------------------------------------------
 
@@ -274,6 +300,24 @@ INSERT INTO `supplier` (`id`, `suppliername`, `supplieraddress`, `suppliercontac
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `transaction`
+--
+
+CREATE TABLE `transaction` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `idtransaction` varchar(255) NOT NULL,
+  `idshoppingcart` varchar(255) NOT NULL,
+  `customer` int(11) NOT NULL,
+  `purchasedate` date NOT NULL,
+  `total` bigint(20) NOT NULL,
+  `sales` int(11) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `typeproduct`
 --
 
@@ -318,11 +362,18 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `iduser`, `username`, `password`, `role`, `status`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, 1, 'indrakusuma', '$2y$12$.Qw/y33owwFeOPBYKLUxOOB1ESywtNqHUxNskTzhKYw/NrdSAXoIC', 1, 1, NULL, NULL, NULL);
+(1, 2, 'indrakusuma', '$2y$12$.Qw/y33owwFeOPBYKLUxOOB1ESywtNqHUxNskTzhKYw/NrdSAXoIC', 1, 1, NULL, NULL, NULL),
+(5, 4, 'dimasanugerah', '$2y$12$EfgPk9moSFnvAICc9cgCHOuRBtScelVtmJy8H8m8KOeAieSAi/Pe6', 1, 1, NULL, '2024-02-09 04:08:59', '2024-02-09 04:09:31');
 
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `cart`
+--
+ALTER TABLE `cart`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `categories`
@@ -394,6 +445,12 @@ ALTER TABLE `supplier`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `transaction`
+--
+ALTER TABLE `transaction`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `typeproduct`
 --
 ALTER TABLE `typeproduct`
@@ -408,6 +465,12 @@ ALTER TABLE `users`
 --
 -- AUTO_INCREMENT for dumped tables
 --
+
+--
+-- AUTO_INCREMENT for table `cart`
+--
+ALTER TABLE `cart`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `categories`
@@ -437,7 +500,7 @@ ALTER TABLE `failed_jobs`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT for table `personal_access_tokens`
@@ -470,6 +533,12 @@ ALTER TABLE `supplier`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
+-- AUTO_INCREMENT for table `transaction`
+--
+ALTER TABLE `transaction`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `typeproduct`
 --
 ALTER TABLE `typeproduct`
@@ -479,7 +548,7 @@ ALTER TABLE `typeproduct`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
