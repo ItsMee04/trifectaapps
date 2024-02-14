@@ -110,8 +110,10 @@ Route::middleware('auth')->group(function () {
         Route::get('users/{id}', [UserController::class, 'delete']);
 
         //route shopping-cart
-        Route::get('shopping-cart',[TransactionController::class, 'shoppingcart']);
-        Route::get('add-to-cart/{id}',[TransactionController::class, 'addtocart']);
+        Route::get('shopping-cart', [TransactionController::class, 'shoppingcart']);
+        Route::get('add-to-cart/{id}', [TransactionController::class, 'addtocart']);
+        Route::get('delete-shoppingcart/{id}', [TransactionController::class, 'deleteshoppingcart']);
+        Route::get('delete-all-shoppingcart/{id}', [TransactionController::class, 'deleteallshoppingcart']);
 
         //route logout
         Route::get('logout', [AuthController::class, 'logout']);

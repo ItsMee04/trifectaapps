@@ -190,7 +190,8 @@
                                     <h4>Total items : {{ $countshoppingcart }}</h4>
                                     @if ($listshoppingcartactive == null)
                                     @else
-                                        <a href="/delete-all-shoppingcart/{{ $listshoppingcartactive->idcart }}">Clear
+                                        <a href="#"
+                                            onclick="confirm_modal('delete-all-shoppingcart/{{ $listshoppingcartactive->idshoppingcart }}');">Clear
                                             all</a>
                                     @endif
                                 </div>
@@ -221,7 +222,7 @@
                                             <li>{{ 'Rp.' . ' ' . number_format($itemcart->priceproduct) }}</li>
                                             <li>
                                                 <a class="confirm-text" href="javascript:void(0);"
-                                                    onclick="confirm_modal('delete-shoppingcart/{{ $itemcart->id }}');">
+                                                    onclick="confirm_modal('delete-shoppingcart/{{ $itemcart->idcart }}');">
                                                     <img src="{{ asset('assets') }}/img/icons/delete.svg" alt="img"
                                                         data-toggle="tooltip" data-placement="top" title="DELETE DATA">
                                                 </a>
@@ -1007,4 +1008,34 @@
             </div>
         </div>
     </div>
+
+    <!-- Modal Popup untuk delete-->
+    <div class="modal custom-modal fade" id="modal_delete">
+        <div class="modal-dialog modal-sm modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title text-center"><strong>DELETE THIS PRODUCT ?</strong></h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"><span
+                            aria-hidden="true">×</span></button>
+                </div>
+                <div class="modal-body">
+                    <form action="identitas" method="POST">
+                        <div class="submit-section">
+                            <a id="delete_link" class="btn btn-danger save-category submit-btn"
+                                data-dismiss="modal">Delete</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Javascript untuk popup modal Delete-->
+    <script type="text/javascript">
+        function confirm_modal(delete_url) {
+            $('#modal_delete').modal('show', {
+                backdrop: 'static'
+            });
+            document.getElementById('delete_link').setAttribute('href', delete_url);
+        }
+    </script>
 @endsection

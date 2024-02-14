@@ -19,15 +19,15 @@ class TransactionController extends Controller
 
     public function shoppingCart()
     {
-        $typecincin    = TypeproductModel::where('type','CINCIN')->first()->id;
-        $typeanting    = TypeproductModel::where('type','ANTING')->first()->id;
-        $typegelang    = TypeproductModel::where('type','GELANG')->first()->id;
-        $typekalung    = TypeproductModel::where('type','KALUNG')->first()->id;
+        $typecincin    = TypeproductModel::where('type', 'CINCIN')->first()->id;
+        $typeanting    = TypeproductModel::where('type', 'ANTING')->first()->id;
+        $typegelang    = TypeproductModel::where('type', 'GELANG')->first()->id;
+        $typekalung    = TypeproductModel::where('type', 'KALUNG')->first()->id;
 
-        $listproductcincin      = ProductModel::where('typeproduct',$typecincin)->get();
-        $listproductanting      = ProductModel::where('typeproduct',$typeanting)->get();
-        $listproductgelang      = ProductModel::where('typeproduct',$typegelang)->get();
-        $listproductkalung      = ProductModel::where('typeproduct',$typekalung)->get();
+        $listproductcincin      = ProductModel::where('typeproduct', $typecincin)->get();
+        $listproductanting      = ProductModel::where('typeproduct', $typeanting)->get();
+        $listproductgelang      = ProductModel::where('typeproduct', $typegelang)->get();
+        $listproductkalung      = ProductModel::where('typeproduct', $typekalung)->get();
 
         $listcustomer   = CustomerModel::all();
 
@@ -46,22 +46,23 @@ class TransactionController extends Controller
             $idshoppingcart = $id . $tahun . $nourut;
         }
 
-        $countshoppingcart = CartModel::where('sales',Auth::user()->iduser)->where('status',1)->count();
+        $countshoppingcart = CartModel::where('sales', Auth::user()->iduser)->where('status', 1)->count();
 
-        $listshoppingcartactive = CartModel::where('sales',Auth::user()->iduser)
-        ->where('status',1)
-        ->latest('idshoppingcart')
-        ->first();
+        $listshoppingcartactive = CartModel::where('sales', Auth::user()->iduser)
+            ->where('status', 1)
+            ->latest('idshoppingcart')
+            ->first();
 
-        $listshoppingcart  = CartModel::leftjoin('product','cart.product','product.id')
-            ->where('cart.status',1)
+        $listshoppingcart  = CartModel::select('product.*', 'cart.status', 'cart.sales', 'cart.id as idcart', 'cart.idshoppingcart')
+            ->leftjoin('product', 'cart.product', 'product.id')
+            ->where('cart.status', 1)
             ->where('cart.sales', Auth::user()->iduser)
             ->get();
-        
-        $subtotal = ProductModel::leftjoin('cart','product.id','cart.id')
-        ->where('cart.status',1)
-        ->where('cart.sales',Auth::user()->iduser)
-        ->sum('product.priceproduct');
+
+        $subtotal = ProductModel::leftjoin('cart', 'product.id', 'cart.id')
+            ->where('cart.status', 1)
+            ->where('cart.sales', Auth::user()->iduser)
+            ->sum('product.priceproduct');
 
         return view('admin.shopping-cart', [
             'listproductcincin' =>  $listproductcincin,
@@ -82,8 +83,7 @@ class TransactionController extends Controller
     {
         $listproduct = ProductModel::where('codeproduct', $id)->first()->id;
 
-        $lastidcart = CartModel::
-            latest('idshoppingcart')
+        $lastidcart = CartModel::latest('idshoppingcart')
             ->first();
 
         $id = "C-";
@@ -99,7 +99,6 @@ class TransactionController extends Controller
                 'status'            => 1,
                 'sales'             => Auth::user()->iduser
             ]);
-
         } elseif ($lastidcart->status == 1) {
             $nourut = substr($lastidcart->idshoppingcart, 6, 6);
             $idcart = $id . $tahun . $nourut;
@@ -125,5 +124,20 @@ class TransactionController extends Controller
         }
 
         return redirect('shopping-cart')->with('success', 'Data Ditambahkan Ke Keranjang');
+    }
+
+    public function deleteshoppingcart($id)
+    {
+        $listcart = CartModel::where('id', $id)->delete();
+        return redirect('shopping-cart')->with('success', 'Data Success Dihapus !');
+    }
+
+    public function deleteallshoppingcart($id)
+    {
+        $listcart = CartModel::where('idshoppingcart', $id)
+            ->where('sales', Auth::user()->iduser)
+            ->delete();
+
+        return redirect('shopping-cart')->with('success', 'Data Success Dihapus !');
     }
 }
