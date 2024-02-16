@@ -77,12 +77,19 @@
                                                         <font style="vertical-align: inherit;">
                                                             <font
                                                                 style="vertical-align: inherit;font-size: 14px;color:#000;font-weight: 400;">
-                                                            </font>
+                                                                {{ $reference }}</font>
                                                         </font><br>
                                                         <font style="vertical-align: inherit;">
-                                                            <font
-                                                                style="vertical-align: inherit;font-size: 14px;color:#2E7D32;font-weight: 400;">
-                                                                Paid</font>
+                                                            @if ($status == 2)
+                                                                <font
+                                                                    style="vertical-align: inherit;font-size: 14px;color:#2E7D32;font-weight: 400;">
+                                                                    Paid</font>
+                                                            @else
+                                                                <font
+                                                                    style="vertical-align: inherit;font-size: 14px;color:#ff0000;font-weight: 400;">
+                                                                    Un Paid</font>
+                                                            @endif
+
                                                         </font><br>
                                                     </td>
                                                 </tr>
@@ -136,7 +143,7 @@
                                     <ul>
                                         <li class="total">
                                             <h4>Grand Total</h4>
-                                            <h5>$ 0.00</h5>
+                                            <h5>{{ 'Rp.' . ' ' . number_format($total) }}</h5>
                                         </li>
                                     </ul>
                                 </div>

@@ -10,13 +10,16 @@ use App\Models\TransactionModel;
 use App\Models\TypeproductModel;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use Illuminate\Queue\Jobs\RedisJob;
 use Illuminate\Support\Facades\Auth;
+
+use function Ramsey\Uuid\v1;
 
 class TransactionController extends Controller
 {
     public function index()
     {
-        $listorders = TransactionModel::leftjoin('customer', 'transaction.customer', 'customer.id')->get();
+        $listorders = TransactionModel::select('transaction.*', 'customer.customername')->leftjoin('customer', 'transaction.customer', 'customer.id')->get();
         return view('admin.orders', ['listorders' => $listorders]);
     }
 
@@ -64,6 +67,18 @@ class TransactionController extends Controller
             ->where('cart.sales', Auth::user()->iduser)
             ->first()->customeraddress;
 
+        $reference = TransactionModel::where('idshoppingcart', $id)
+            ->where('sales', Auth::user()->iduser)
+            ->first()->idtransaction;
+
+        $status = TransactionModel::where('idshoppingcart', $id)
+            ->where('sales', Auth::user()->iduser)
+            ->first()->status;
+
+        $total = TransactionModel::where('idshoppingcart', $id)
+            ->where('sales', Auth::user()->iduser)
+            ->first()->total;
+
         return view('admin.detailpage.orders-details', [
             'listorders'        => $listorders,
             'idshoppingcart'    => $idshoppingcart,
@@ -71,7 +86,18 @@ class TransactionController extends Controller
             'customer'          => $customer,
             'customercontact'   => $phone,
             'customeraddress'   => $address,
+            'reference'         => $reference,
+            'status'            => $status,
+            'total'             => $total,
         ]);
+    }
+
+    public function confirmpayment($id)
+    {
+        $confirm = TransactionModel::where('idtransaction', $id)->update([
+            'status'          => 2,
+        ]);
+        return redirect('orders')->with('success', 'Confirm Payments Success !');
     }
 
     public function shoppingCart()

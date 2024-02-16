@@ -71,7 +71,7 @@
                                         </td>
                                         <td>
                                             <a class="confirm-text" href="javascript:void(0);"
-                                                onclick="confirm_modal('confirm-payment/{{ $item->id }}');">
+                                                onclick="confirm_modal('confirm-payment/{{ $item->idtransaction }}');">
                                                 <img src="{{ asset('assets') }}/img/icons/dash2.svg" alt="img"
                                                     data-toggle="tooltip" data-placement="top" title="CONFIRM PAYMENT">
                                             </a>
@@ -141,15 +141,15 @@
         <div class="modal-dialog modal-sm modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title text-center"><b>DELETE THIS DATA ?</b></h4>
+                    <h4 class="modal-title text-center"><b> CONFIRM PAYMENTS ?</b></h4>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"><span
                             aria-hidden="true">×</span></button>
                 </div>
                 <div class="modal-body">
                     <form action="identitas" method="POST">
                         <div class="submit-section">
-                            <a id="delete_link" class="btn btn-danger save-category submit-btn"
-                                data-dismiss="modal">Delete</a>
+                            <a id="delete_link" class="btn btn-success save-category submit-btn"
+                                data-dismiss="modal">CONFIRM</a>
                         </div>
                     </form>
                 </div>
