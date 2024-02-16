@@ -24,77 +24,68 @@
                                     <td colspan="6" style="padding: 5px;vertical-align: top;">
                                         <table style="width: 100%;line-height: inherit;text-align: left;">
                                             <tbody>
-                                                @foreach ($orders as $itemlistorders)
-                                                    <tr>
-                                                        <td
-                                                            style="padding:5px;vertical-align:top;text-align:left;padding-bottom:20px">
-                                                            <font style="vertical-align: inherit;margin-bottom:25px;">
-                                                                <font
-                                                                    style="vertical-align: inherit;font-size:14px;color:#7367F0;font-weight:600;line-height: 35px; ">
-                                                                    Customer Info</font>
-                                                            </font><br>
-                                                            <font style="vertical-align: inherit;">
-                                                                <font
-                                                                    style="vertical-align: inherit;font-size: 14px;color:#000;font-weight: 400;">
-                                                                    {{ $itemlistorders->customername }}</font>
-                                                            </font><br>
-                                                            <font style="vertical-align: inherit;">
-                                                                <font
-                                                                    style="vertical-align: inherit;font-size: 14px;color:#000;font-weight: 400;">
-                                                                    {{ $itemlistorders->customercontact }}</font>
-                                                            </font><br>
-                                                            <font style="vertical-align: inherit;">
-                                                                <font
-                                                                    style="vertical-align: inherit;font-size: 14px;color:#000;font-weight: 400;">
-                                                                    {{ $itemlistorders->customeraddress }}</font>
-                                                            </font><br>
-                                                        </td>
-                                                        <td
-                                                            style="padding:5px;vertical-align:top;text-align:left;padding-bottom:20px">
-                                                            <font style="vertical-align: inherit;margin-bottom:25px;">
-                                                                <font
-                                                                    style="vertical-align: inherit;font-size:14px;color:#7367F0;font-weight:600;line-height: 35px; ">
-                                                                    Invoice Info</font>
-                                                            </font><br>
-                                                            <font style="vertical-align: inherit;">
-                                                                <font
-                                                                    style="vertical-align: inherit;font-size: 14px;color:#000;font-weight: 400;">
-                                                                    Reference </font>
-                                                            </font><br>
-                                                            <font style="vertical-align: inherit;">
-                                                                <font
-                                                                    style="vertical-align: inherit;font-size: 14px;color:#000;font-weight: 400;">
-                                                                    Payment Status</font>
-                                                            </font><br>
-                                                        </td>
-                                                        <td
-                                                            style="padding:5px;vertical-align:top;text-align:right;padding-bottom:20px">
-                                                            <font style="vertical-align: inherit;margin-bottom:25px;">
-                                                                <font
-                                                                    style="vertical-align: inherit;font-size:14px;color:#7367F0;font-weight:600;line-height: 35px; ">
-                                                                    &nbsp;</font>
-                                                            </font><br>
-                                                            <font style="vertical-align: inherit;">
-                                                                <font
-                                                                    style="vertical-align: inherit;font-size: 14px;color:#000;font-weight: 400;">
-                                                                    {{ $itemlistorders->idtransaction }} </font>
-                                                            </font><br>
-                                                            @if ($itemlistorders->status == 2)
-                                                                <font style="vertical-align: inherit;">
-                                                                    <font
-                                                                        style="vertical-align: inherit;font-size: 14px;color:#2E7D32;font-weight: 400;">
-                                                                        Paid</font>
-                                                                </font><br>
-                                                            @else
-                                                                <font style="vertical-align: inherit;">
-                                                                    <font
-                                                                        style="vertical-align: inherit;font-size: 14px;color:#f11000;font-weight: 400;">
-                                                                        Un Paid</font>
-                                                                </font><br>
-                                                            @endif
-                                                        </td>
-                                                    </tr>
-                                                @endforeach
+
+                                                <tr>
+                                                    <td
+                                                        style="padding:5px;vertical-align:top;text-align:left;padding-bottom:20px">
+                                                        <font style="vertical-align: inherit;margin-bottom:25px;">
+                                                            <font
+                                                                style="vertical-align: inherit;font-size:14px;color:#7367F0;font-weight:600;line-height: 35px; ">
+                                                                Customer Info</font>
+                                                        </font><br>
+                                                        <font style="vertical-align: inherit;">
+                                                            <font
+                                                                style="vertical-align: inherit;font-size: 14px;color:#000;font-weight: 400;">
+                                                                {{ $customer }}</font>
+                                                        </font><br>
+                                                        <font style="vertical-align: inherit;">
+                                                            <font
+                                                                style="vertical-align: inherit;font-size: 14px;color:#000;font-weight: 400;">
+                                                                {{ $customercontact }}</font>
+                                                        </font><br>
+                                                        <font style="vertical-align: inherit;">
+                                                            <font
+                                                                style="vertical-align: inherit;font-size: 14px;color:#000;font-weight: 400;">
+                                                                {{ $customeraddress }}</font>
+                                                        </font><br>
+                                                    </td>
+                                                    <td
+                                                        style="padding:5px;vertical-align:top;text-align:left;padding-bottom:20px">
+                                                        <font style="vertical-align: inherit;margin-bottom:25px;">
+                                                            <font
+                                                                style="vertical-align: inherit;font-size:14px;color:#7367F0;font-weight:600;line-height: 35px; ">
+                                                                Invoice Info</font>
+                                                        </font><br>
+                                                        <font style="vertical-align: inherit;">
+                                                            <font
+                                                                style="vertical-align: inherit;font-size: 14px;color:#000;font-weight: 400;">
+                                                                Reference </font>
+                                                        </font><br>
+                                                        <font style="vertical-align: inherit;">
+                                                            <font
+                                                                style="vertical-align: inherit;font-size: 14px;color:#000;font-weight: 400;">
+                                                                Payment Status</font>
+                                                        </font><br>
+                                                    </td>
+                                                    <td
+                                                        style="padding:5px;vertical-align:top;text-align:right;padding-bottom:20px">
+                                                        <font style="vertical-align: inherit;margin-bottom:25px;">
+                                                            <font
+                                                                style="vertical-align: inherit;font-size:14px;color:#7367F0;font-weight:600;line-height: 35px; ">
+                                                                &nbsp;</font>
+                                                        </font><br>
+                                                        <font style="vertical-align: inherit;">
+                                                            <font
+                                                                style="vertical-align: inherit;font-size: 14px;color:#000;font-weight: 400;">
+                                                            </font>
+                                                        </font><br>
+                                                        <font style="vertical-align: inherit;">
+                                                            <font
+                                                                style="vertical-align: inherit;font-size: 14px;color:#2E7D32;font-weight: 400;">
+                                                                Paid</font>
+                                                        </font><br>
+                                                    </td>
+                                                </tr>
                                             </tbody>
                                         </table>
                                     </td>

@@ -41,10 +41,37 @@ class TransactionController extends Controller
             ->leftjoin('customer', 'transaction.customer', 'customer.id')
             ->where('transaction.idshoppingcart', $id)
             ->where('cart.sales', Auth::user()->iduser)
-            ->groupBy('transaction.idshoppingcart')
             ->get();
 
-        return view('admin.detailpage.orders-details', ['listorders' => $listorders, 'idshoppingcart' => $idshoppingcart, 'orders' => $orders]);
+        $customer = DB::table('transaction')
+            ->leftjoin('cart', 'transaction.idshoppingcart', 'cart.idshoppingcart')
+            ->leftjoin('customer', 'transaction.customer', 'customer.id')
+            ->where('transaction.idshoppingcart', $id)
+            ->where('cart.sales', Auth::user()->iduser)
+            ->first()->customername;
+
+        $phone = DB::table('transaction')
+            ->leftjoin('cart', 'transaction.idshoppingcart', 'cart.idshoppingcart')
+            ->leftjoin('customer', 'transaction.customer', 'customer.id')
+            ->where('transaction.idshoppingcart', $id)
+            ->where('cart.sales', Auth::user()->iduser)
+            ->first()->customercontact;
+
+        $address = DB::table('transaction')
+            ->leftjoin('cart', 'transaction.idshoppingcart', 'cart.idshoppingcart')
+            ->leftjoin('customer', 'transaction.customer', 'customer.id')
+            ->where('transaction.idshoppingcart', $id)
+            ->where('cart.sales', Auth::user()->iduser)
+            ->first()->customeraddress;
+
+        return view('admin.detailpage.orders-details', [
+            'listorders'        => $listorders,
+            'idshoppingcart'    => $idshoppingcart,
+            'orders'            => $orders,
+            'customer'          => $customer,
+            'customercontact'   => $phone,
+            'customeraddress'   => $address,
+        ]);
     }
 
     public function shoppingCart()
