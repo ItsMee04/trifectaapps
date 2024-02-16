@@ -23,6 +23,8 @@ use App\Http\Controllers\CategoriesController;
 use App\Http\Controllers\ProfessionController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\TypeproductController;
+use App\Models\TransactionModel;
+use Illuminate\Database\Events\TransactionCommitted;
 
 /*
 |--------------------------------------------------------------------------
@@ -114,6 +116,11 @@ Route::middleware('auth')->group(function () {
         Route::get('add-to-cart/{id}', [TransactionController::class, 'addtocart']);
         Route::get('delete-shoppingcart/{id}', [TransactionController::class, 'deleteshoppingcart']);
         Route::get('delete-all-shoppingcart/{id}', [TransactionController::class, 'deleteallshoppingcart']);
+        Route::post('checkout', [TransactionController::class, 'checkout']);
+
+        //route orders
+        Route::get('orders', [TransactionController::class, 'index']);
+        Route::get('orders-details/{id}', [TransactionController::class, 'show']);
 
         //route logout
         Route::get('logout', [AuthController::class, 'logout']);

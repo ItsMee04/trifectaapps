@@ -2,19 +2,49 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use App\Models\CartModel;
-use App\Models\CustomerModel;
 use App\Models\ProductModel;
+use Illuminate\Http\Request;
+use App\Models\CustomerModel;
 use App\Models\TransactionModel;
 use App\Models\TypeproductModel;
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 
 class TransactionController extends Controller
 {
     public function index()
     {
+        $listorders = TransactionModel::leftjoin('customer', 'transaction.customer', 'customer.id')->get();
+        return view('admin.orders', ['listorders' => $listorders]);
+    }
+
+    public function show($id)
+    {
+        $listorders = TransactionModel::leftjoin('cart', 'transaction.idshoppingcart', 'cart.idshoppingcart')
+            ->leftjoin('customer', 'transaction.customer', 'customer.id')
+            ->leftjoin('product', 'cart.product', 'product.id')
+            ->where('transaction.idshoppingcart', $id)
+            ->where('cart.sales', Auth::user()->iduser)
+            ->get();
+
+        $idshoppingcart = TransactionModel::leftjoin('cart', 'transaction.idshoppingcart', 'cart.idshoppingcart')
+            ->leftjoin('customer', 'transaction.customer', 'customer.id')
+            ->leftjoin('product', 'cart.product', 'product.id')
+            ->where('transaction.idshoppingcart', $id)
+            ->where('cart.sales', Auth::user()->iduser)
+            ->first()->idshoppingcart;
+
+        $orders = DB::table('transaction')
+            ->leftjoin('cart', 'transaction.idshoppingcart', 'cart.idshoppingcart')
+            ->leftjoin('customer', 'transaction.customer', 'customer.id')
+            ->where('transaction.idshoppingcart', $id)
+            ->where('cart.sales', Auth::user()->iduser)
+            ->groupBy('transaction.idshoppingcart')
+            ->get();
+
+        return view('admin.detailpage.orders-details', ['listorders' => $listorders, 'idshoppingcart' => $idshoppingcart, 'orders' => $orders]);
     }
 
     public function shoppingCart()
@@ -59,7 +89,7 @@ class TransactionController extends Controller
             ->where('cart.sales', Auth::user()->iduser)
             ->get();
 
-        $subtotal = ProductModel::leftjoin('cart', 'product.id', 'cart.id')
+        $subtotal = ProductModel::leftjoin('cart', 'product.id', 'cart.product')
             ->where('cart.status', 1)
             ->where('cart.sales', Auth::user()->iduser)
             ->sum('product.priceproduct');
@@ -76,7 +106,7 @@ class TransactionController extends Controller
             'listshoppingcart'  =>  $listshoppingcart,
             'subtotal'          =>  $subtotal,
         ]);
-        // dd($typecincin,$typeanting,$typegelang,$typekalung);
+        // dd($subtotal);
     }
 
     public function addtocart($id)
@@ -110,7 +140,7 @@ class TransactionController extends Controller
                 'sales'             => Auth::user()->iduser
             ]);
         } elseif ($lastidcart->status == 2) {
-            $nourut = substr($lastidcart->idcart, 6, 6) + 1;
+            $nourut = substr($lastidcart->idshoppingcart, 6, 6) + 1;
             $nourut = str_pad($nourut, 6, "0", STR_PAD_LEFT);
 
             $idcart = $id . $tahun . $nourut;
@@ -139,5 +169,59 @@ class TransactionController extends Controller
             ->delete();
 
         return redirect('shopping-cart')->with('success', 'Data Success Dihapus !');
+    }
+
+    public function checkout(Request $request)
+    {
+        $validasi = $request->validate([
+            'customername'  =>  'required',
+        ]);
+
+        $idshoppingcart = CartModel::where('sales', Auth::user()->iduser)
+            ->where('status', 1)
+            ->first()
+            ->idshoppingcart;
+
+        $idtransaction = TransactionModel::latest('idtransaction')
+            ->first();
+
+        $id = "T-";
+        $tahun = date('Y');
+
+        if ($idtransaction == null) {
+            $nourut = "000001";
+            $newidtransaction = $id . $tahun . $nourut;
+        } else {
+            $nourut = substr($idtransaction->idtransaction, 6, 6) + 1;
+            $nourut = str_pad($nourut, 6, "0", STR_PAD_LEFT);
+
+            $newidtransaction = $id . $tahun . $nourut;
+        }
+
+        $subtotal = ProductModel::leftjoin('cart', 'product.id', 'cart.product')
+            ->where('cart.status', 1)
+            ->where('cart.sales', Auth::user()->iduser)
+            ->sum('product.priceproduct');
+
+        $insert = TransactionModel::create([
+            'idtransaction' => $newidtransaction,
+            'idshoppingcart'    => $idshoppingcart,
+            'customer'          => $request->customername,
+            'purchasedate'      => date("Y-m-d"),
+            'total'             => $subtotal,
+            'sales'             => Auth::user()->iduser
+        ]);
+
+        if ($insert) {
+
+            CartModel::where('sales', Auth::user()->iduser)
+                ->where('status', 1)
+                ->where('idshoppingcart', $idshoppingcart)
+                ->update([
+                    'status' => 2
+                ]);
+        }
+
+        return redirect('shopping-cart')->with('success', 'Transaction Succesfully !');
     }
 }

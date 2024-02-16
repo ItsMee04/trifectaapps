@@ -171,7 +171,7 @@
                                     <div class="col-lg-12">
                                         <div class="select-split ">
                                             <div class="select-group w-100">
-                                                <select class="select" name="namacustomer" required>
+                                                <select class="select" name="customername" required>
                                                     <option disabled selected hidden> Pilih Customer</option>
                                                     @foreach ($listcustomer as $itemcustomer)
                                                         <option value="{{ $itemcustomer->id }}">
