@@ -70,11 +70,19 @@
                                             @endif
                                         </td>
                                         <td>
-                                            <a class="confirm-text" href="javascript:void(0);"
-                                                onclick="confirm_modal('confirm-payment/{{ $item->idtransaction }}');">
-                                                <img src="{{ asset('assets') }}/img/icons/dash2.svg" alt="img"
-                                                    data-toggle="tooltip" data-placement="top" title="CONFIRM PAYMENT">
-                                            </a>
+                                            @if ($item->status == 2)
+                                                <a href="invoice/{{ $item->idshoppingcart }}" class="confirm-text"
+                                                    href="javascript:void(0);" target="_blank">
+                                                    <img src="{{ asset('assets') }}/img/icons/printer.svg" alt="img"
+                                                        data-toggle="tooltip" data-placement="top" title="Print Invoice">
+                                                </a>
+                                            @else
+                                                <a class="confirm-text" href="javascript:void(0);"
+                                                    onclick="confirm_modal('confirm-payment/{{ $item->idtransaction }}');">
+                                                    <img src="{{ asset('assets') }}/img/icons/dash2.svg" alt="img"
+                                                        data-toggle="tooltip" data-placement="top" title="CONFIRM PAYMENT">
+                                                </a>
+                                            @endif
                                         </td>
                                     </tr>
                                 @endforeach

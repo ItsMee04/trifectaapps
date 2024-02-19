@@ -10,6 +10,7 @@ use App\Models\TransactionModel;
 use App\Models\TypeproductModel;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use App\Models\EmployeeModel;
 use Illuminate\Queue\Jobs\RedisJob;
 use Illuminate\Support\Facades\Auth;
 
@@ -100,6 +101,81 @@ class TransactionController extends Controller
         return redirect('orders')->with('success', 'Confirm Payments Success !');
     }
 
+    public function invoice($id)
+    {
+        $listorders = TransactionModel::leftjoin('cart', 'transaction.idshoppingcart', 'cart.idshoppingcart')
+            ->leftjoin('customer', 'transaction.customer', 'customer.id')
+            ->leftjoin('product', 'cart.product', 'product.id')
+            ->where('transaction.idshoppingcart', $id)
+            ->where('cart.sales', Auth::user()->iduser)
+            ->get();
+
+        $idshoppingcart = TransactionModel::leftjoin('cart', 'transaction.idshoppingcart', 'cart.idshoppingcart')
+            ->leftjoin('customer', 'transaction.customer', 'customer.id')
+            ->leftjoin('product', 'cart.product', 'product.id')
+            ->where('transaction.idshoppingcart', $id)
+            ->where('cart.sales', Auth::user()->iduser)
+            ->first()->idshoppingcart;
+
+        $orders = DB::table('transaction')
+            ->leftjoin('cart', 'transaction.idshoppingcart', 'cart.idshoppingcart')
+            ->leftjoin('customer', 'transaction.customer', 'customer.id')
+            ->where('transaction.idshoppingcart', $id)
+            ->where('cart.sales', Auth::user()->iduser)
+            ->get();
+
+        $customer = DB::table('transaction')
+            ->leftjoin('cart', 'transaction.idshoppingcart', 'cart.idshoppingcart')
+            ->leftjoin('customer', 'transaction.customer', 'customer.id')
+            ->where('transaction.idshoppingcart', $id)
+            ->where('cart.sales', Auth::user()->iduser)
+            ->first()->customername;
+
+        $phone = DB::table('transaction')
+            ->leftjoin('cart', 'transaction.idshoppingcart', 'cart.idshoppingcart')
+            ->leftjoin('customer', 'transaction.customer', 'customer.id')
+            ->where('transaction.idshoppingcart', $id)
+            ->where('cart.sales', Auth::user()->iduser)
+            ->first()->customercontact;
+
+        $address = DB::table('transaction')
+            ->leftjoin('cart', 'transaction.idshoppingcart', 'cart.idshoppingcart')
+            ->leftjoin('customer', 'transaction.customer', 'customer.id')
+            ->where('transaction.idshoppingcart', $id)
+            ->where('cart.sales', Auth::user()->iduser)
+            ->first()->customeraddress;
+
+        $reference = TransactionModel::where('idshoppingcart', $id)
+            ->where('sales', Auth::user()->iduser)
+            ->first()->idtransaction;
+
+        $status = TransactionModel::where('idshoppingcart', $id)
+            ->where('sales', Auth::user()->iduser)
+            ->first()->status;
+
+        $total = TransactionModel::where('idshoppingcart', $id)
+            ->where('sales', Auth::user()->iduser)
+            ->first()->total;
+
+        $sales = EmployeeModel::where('id', Auth::user()->iduser)->first()->employeename;
+
+        $tahun = date('d/m/Y');
+
+        return view('admin.invoice.invoice-order', [
+            'listorders'        => $listorders,
+            'idshoppingcart'    => $idshoppingcart,
+            'orders'            => $orders,
+            'customer'          => $customer,
+            'customercontact'   => $phone,
+            'customeraddress'   => $address,
+            'reference'         => $reference,
+            'status'            => $status,
+            'total'             => $total,
+            'sales'             => $sales,
+            'year'              => $tahun,
+        ]);
+    }
+
     public function shoppingCart()
     {
         $typecincin    = TypeproductModel::where('type', 'CINCIN')->first()->id;
@@ -157,7 +233,7 @@ class TransactionController extends Controller
             'countshoppingcart' =>  $countshoppingcart,
             'listshoppingcartactive'    =>  $listshoppingcartactive,
             'listshoppingcart'  =>  $listshoppingcart,
-            'subtotal'          =>  $subtotal,
+            'subtotal'          =>  $subtotal
         ]);
         // dd($subtotal);
     }

@@ -80,7 +80,29 @@
                     </ul>
                 </li>
                 <li class="submenu-open">
-                    <h6 class="submenu-hdr">Transaction</h6>
+                    <h6 class="submenu-hdr">Sales Transaction</h6>
+                    <ul>
+                        <li class="submenu">
+                            <a href="javascript:void(0);"
+                                class="@if (request()->route()->uri == 'shopping-cart' ||
+                                        request()->route()->uri == 'orders' ||
+                                        request()->route()->uri == 'orders/{id}' ||
+                                        request()->route()->uri == 'orders-details/{id}') active subdrop @endif"><i
+                                    data-feather="shopping-cart"></i><span>Transaction</span><span
+                                    class="menu-arrow"></span></a>
+                            <ul>
+                                <li><a href="/shopping-cart"
+                                        class="@if (request()->route()->uri == 'shopping-cart' || request()->route()->uri == 'shopping-cart/{id}') active @endif">Shopping Cart</a></li>
+                                <li><a href="/orders"
+                                        class="@if (request()->route()->uri == 'orders' || request()->route()->uri == 'orders-details/{id}') active @endif">Orders</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="/purchase"><i data-feather="file-text"></i><span>Purchase</span></a></li>
+                        <li><a href="/pos"><i data-feather="hard-drive"></i><span>POS</a></li>
+                    </ul>
+                </li>
+                <li class="submenu-open">
+                    <h6 class="submenu-hdr">Purchase</h6>
                     <ul>
                         <li class="submenu">
                             <a href="javascript:void(0);"
@@ -121,7 +143,8 @@
                     <h6 class="submenu-hdr">Sales</h6>
                     <ul>
                         <li><a href="saleslist.html"><i data-feather="shopping-cart"></i><span>Sales</span></a></li>
-                        <li><a href="invoicereport.html"><i data-feather="file-text"></i><span>Invoices</span></a></li>
+                        <li><a href="invoicereport.html"><i data-feather="file-text"></i><span>Invoices</span></a>
+                        </li>
                         <li><a href="salesreturnlists.html"><i data-feather="copy"></i><span>Sales Return</span></a>
                         </li>
                         <li><a href="quotationList.html"><i data-feather="save"></i><span>Quotation</span></a></li>
