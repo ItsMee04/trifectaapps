@@ -59,7 +59,7 @@
                             <td colspan="*">
                         <tr>
 
-                            <td valign='top' style='font-size:12px;' align="center"><img style="max-width: 50%;"
+                            <td valign='top' style='font-size:12px;' align="center"><img width="50" height="50"
                                     src='{{ asset('storage/photoproduct/' . $itemorders->photoproduct) }}' />
                             </td>
                             <td valign='top' style='font-size:12px;' align="center">{{ $itemorders->nameproduct }}
