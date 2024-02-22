@@ -183,10 +183,10 @@ class TransactionController extends Controller
         $typegelang    = TypeproductModel::where('type', 'GELANG')->first()->id;
         $typekalung    = TypeproductModel::where('type', 'KALUNG')->first()->id;
 
-        $listproductcincin      = ProductModel::where('typeproduct', $typecincin)->get();
-        $listproductanting      = ProductModel::where('typeproduct', $typeanting)->get();
-        $listproductgelang      = ProductModel::where('typeproduct', $typegelang)->get();
-        $listproductkalung      = ProductModel::where('typeproduct', $typekalung)->get();
+        $listproductcincin      = ProductModel::where('typeproduct', $typecincin)->where('status', 1)->get();
+        $listproductanting      = ProductModel::where('typeproduct', $typeanting)->where('status', 1)->get();
+        $listproductgelang      = ProductModel::where('typeproduct', $typegelang)->where('status', 1)->get();
+        $listproductkalung      = ProductModel::where('typeproduct', $typekalung)->where('status', 1)->get();
 
         $listcustomer   = CustomerModel::all();
 

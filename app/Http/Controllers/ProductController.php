@@ -11,7 +11,7 @@ class ProductController extends Controller
 {
     public function index()
     {
-        $listproduct = ProductModel::all();
+        $listproduct = ProductModel::where('status', 1)->get();
         $typeproduct = TypeproductModel::all();
 
         //codeproduct

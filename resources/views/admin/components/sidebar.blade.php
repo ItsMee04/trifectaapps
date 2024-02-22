@@ -97,7 +97,8 @@
                                         class="@if (request()->route()->uri == 'orders' || request()->route()->uri == 'orders-details/{id}') active @endif">Orders</a></li>
                             </ul>
                         </li>
-                        <li><a href="/purchase"><i data-feather="file-text"></i><span>Purchase</span></a></li>
+                        <li><a href="/purchase" class="@if (request()->route()->uri == 'purchase' || request()->route()->uri == 'purchase/{id}') active @endif"><i
+                                    data-feather="file-text"></i><span>Purchase</span></a></li>
                         <li><a href="/pos"><i data-feather="hard-drive"></i><span>POS</a></li>
                     </ul>
                 </li>

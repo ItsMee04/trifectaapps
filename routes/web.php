@@ -7,6 +7,7 @@ use App\Models\EmployeeModel;
 use App\Models\CategoriesModel;
 use App\Models\ProfessionModel;
 use Barryvdh\DomPDF\Facade\Pdf;
+use App\Models\TransactionModel;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PdfController;
 use App\Http\Controllers\AuthController;
@@ -17,13 +18,13 @@ use App\Http\Controllers\BarcodeController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\EmployeeController;
+use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\CategoriesController;
 use App\Http\Controllers\ProfessionController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\TypeproductController;
-use App\Models\TransactionModel;
 use Illuminate\Database\Events\TransactionCommitted;
 
 /*
@@ -123,6 +124,10 @@ Route::middleware('auth')->group(function () {
         Route::get('orders-details/{id}', [TransactionController::class, 'show']);
         Route::get('confirm-payment/{id}', [TransactionController::class, 'confirmpayment']);
         Route::get('invoice/{id}', [TransactionController::class, 'invoice']);
+
+        //route purchase
+        Route::get('purchase', [PurchaseController::class, 'index']);
+        Route::post('purchase', [PurchaseController::class, 'store']);
 
         //route logout
         Route::get('logout', [AuthController::class, 'logout']);
