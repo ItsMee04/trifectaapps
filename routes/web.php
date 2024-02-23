@@ -128,6 +128,7 @@ Route::middleware('auth')->group(function () {
         //route purchase
         Route::get('purchase', [PurchaseController::class, 'index']);
         Route::post('purchase', [PurchaseController::class, 'store']);
+        Route::get('edit-purchase/{id}', [PurchaseController::class, 'show']);
 
         //route logout
         Route::get('logout', [AuthController::class, 'logout']);

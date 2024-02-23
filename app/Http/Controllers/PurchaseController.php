@@ -115,4 +115,14 @@ class PurchaseController extends Controller
 
         return redirect('purchase')->with('success', 'Data Success Disimpan !');
     }
+
+    public function show($id)
+    {
+        $listpurchase = PurchaseModel::where('id', $id)->first();
+        $typeproduct = TypeproductModel::all();
+        return view('admin.editpage.edit-purchase', [
+            'listpurchase' => $listpurchase,
+            'typeproduct'  => $typeproduct,
+        ]);
+    }
 }
