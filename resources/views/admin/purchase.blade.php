@@ -128,13 +128,18 @@
                 <div class="modal-body">
                     <form action="purchase" method="POST" enctype="multipart/form-data">
                         @csrf
+                        <div class="form-group">
+                            <label>ID Purchase</label>
+                            <input type="text" class="form-control form-white" placeholder="Masukan Nama Customer"
+                                value="{{ $idpurchase }}" type="text" name="idpurchase" readonly>
+                        </div>
                         <div class="row">
                             <div class="col-lg-6">
                                 <div class="form-group">
-                                    <label>ID Purchase</label>
+                                    <label>Code Product</label>
                                     <input type="text" class="form-control form-white"
-                                        placeholder="Masukan Nama Customer" value="{{ $idpurchase }}" type="text"
-                                        name="idpurchase" readonly>
+                                        placeholder="Masukan Nama Customer" value="{{ $codeproduct }}" type="text"
+                                        name="codeproduct" readonly>
                                 </div>
                             </div>
                             <div class="col-lg-6">
@@ -202,26 +207,15 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-lg-6">
-                                <div class="form-group">
-                                    <label>Categories Product</label>
-                                    <select class="select form-control form-white" name="categoriesproduct" required>
-                                        <option disabled selected hidden> Pilih Kategori</option>
-                                        @foreach ($listcategories as $itemcategories)
-                                            <option value="{{ $itemcategories->id }}">
-                                                {{ $itemcategories->categories }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="form-group">
-                                    <label>Description Product</label>
-                                    <input type="text" class="form-control form-white" name="decriptionproduct"
-                                        required>
-                                </div>
-                            </div>
+                        <div class="form-group">
+                            <label>Categories Product</label>
+                            <select class="select form-control form-white" name="categoriesproduct" required>
+                                <option disabled selected hidden> Pilih Kategori</option>
+                                @foreach ($listcategories as $itemcategories)
+                                    <option value="{{ $itemcategories->id }}">
+                                        {{ $itemcategories->categories }}</option>
+                                @endforeach
+                            </select>
                         </div>
                         <div class="col-lg-12">
                             <div class="form-group">

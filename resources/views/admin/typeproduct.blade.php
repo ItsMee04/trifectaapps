@@ -123,9 +123,9 @@
                     <form action="typeproduct" method="POST">
                         @csrf
                         <div class="form-group">
-                            <label>Type Product</label>
+                            <label for="posttype">Type Product</label>
                             <input type="text" class="form-control form-white" placeholder="Enter Type Product"
-                                type="text" name="type" required>
+                                type="text" name="type" id="posttype" required>
                         </div>
                         <div class="form-group">
                             <label>Status</label>

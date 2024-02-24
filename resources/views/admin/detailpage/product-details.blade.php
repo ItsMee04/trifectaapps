@@ -34,7 +34,7 @@
                                     </li>
                                     <li>
                                         <h4>Price Product</h4>
-                                        <h6>{{ 'Rp.' . ' ' . number_format($listproduct->priceproduct, 2) }}</h6>
+                                        <h6>{{ 'Rp.' . ' ' . number_format($listproduct->sellingprice, 2) }}</h6>
                                     </li>
                                     <li>
                                         <h4>Description Product</h4>

@@ -123,13 +123,13 @@
                     <form action="profession" method="POST">
                         @csrf
                         <div class="form-group">
-                            <label>Profession</label>
+                            <label for="postprofession">Profession</label>
                             <input type="text" class="form-control form-white" placeholder="Masukan Jenis Profesi"
-                                type="text" name="profession" required>
+                                type="text" name="profession" id="postprofession" required>
                         </div>
                         <div class="form-group">
-                            <label>Status</label>
-                            <select class="select form-control form-white" name="status" required>
+                            <label for="poststatus">Status</label>
+                            <select class="select form-control form-white" name="status" id="poststatus" required>
                                 <option value="1"> AKTIF</option>
                                 <option value="2"> TIDAK AKTIF</option>
                             </select>

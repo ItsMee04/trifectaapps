@@ -8,6 +8,7 @@ use App\Models\PurchaseModel;
 use App\Models\CategoriesModel;
 use App\Models\TypeproductModel;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\File;
 
 class PurchaseController extends Controller
 {
@@ -19,13 +20,13 @@ class PurchaseController extends Controller
         $id = "PU-";
         $tahun = date('Y');
 
-        $idTransaction = PurchaseModel::latest()->first();
+        $numberpurchase = PurchaseModel::latest()->first();
 
-        if ($idTransaction == null) {
+        if ($numberpurchase == null) {
             $nourut = "000001";
             $idpurchase = $id . $tahun . $nourut;
         } else {
-            $nourut = substr($idTransaction->idpurchase, 6, 6) + 1;
+            $nourut = substr($numberpurchase->idpurchase, 7, 7) + 1;
             $nourut = str_pad($nourut, 6, "0", STR_PAD_LEFT);
 
             $idpurchase = $id . $tahun . $nourut;
@@ -37,12 +38,28 @@ class PurchaseController extends Controller
 
         $typeproduct = TypeproductModel::all();
 
+        //codeproduct
+        $numberproduct = ProductModel::latest()->first();
+        $code = "P-";
+        $year = date('Y');
+
+        if ($numberproduct == null) {
+            $serialnumber = "000001";
+            $codeproduct = $code . $year . $serialnumber;
+        } else {
+            $serialnumber = substr($numberproduct->codeproduct, 6, 6) + 1;
+            $serialnumber = str_pad($serialnumber, 6, "0", STR_PAD_LEFT);
+
+            $codeproduct = $code . $year . $serialnumber;
+        }
+
         return view('admin.purchase', [
             'listpurchase' => $listpurchase,
             'idpurchase' => $idpurchase,
             'purchasedate' => $purchasedate,
             'listcategories' => $listcategories,
-            'typeproduct'   => $typeproduct
+            'typeproduct'   => $typeproduct,
+            'codeproduct'   => $codeproduct
         ]);
     }
 
@@ -72,8 +89,7 @@ class PurchaseController extends Controller
             'purchasedate'  =>  'required',
             'conditionproduct'  =>  'required',
             'typeproduct'   =>  'required',
-            'categoriesproduct' =>  'required',
-            'decriptionproduct' =>  'required'
+            'categoriesproduct' =>  'required'
         ]);
 
         $newphoto = "";
@@ -86,6 +102,7 @@ class PurchaseController extends Controller
 
         $insertpurchase = PurchaseModel::create([
             'idpurchase'    =>  $request->idpurchase,
+            'codeproduct'   =>  $codeproduct,
             'productname'   =>  $request->productname,
             'weightproduct' =>  $request->weightproduct,
             'caratproduct'  =>  $request->caratproduct,
@@ -103,7 +120,6 @@ class PurchaseController extends Controller
             ProductModel::create([
                 'codeproduct'           => $codeproduct,
                 'nameproduct'           => $request->productname,
-                'descriptionproduct'    => $request->decriptionproduct,
                 'typeproduct'           => $request->typeproduct,
                 'weightproduct'         => $request->weightproduct,
                 'caratproduct'          => $request->caratproduct,
@@ -120,9 +136,91 @@ class PurchaseController extends Controller
     {
         $listpurchase = PurchaseModel::where('id', $id)->first();
         $typeproduct = TypeproductModel::all();
+        $listcategories = CategoriesModel::all();
         return view('admin.editpage.edit-purchase', [
             'listpurchase' => $listpurchase,
             'typeproduct'  => $typeproduct,
+            'listcategories'    =>  $listcategories,
         ]);
+    }
+
+    public function update(Request $request, $id)
+    {
+        $listpurchase = PurchaseModel::where('id', $id)->first();
+
+        $validasi = $request->validate([
+            'productname'   =>  'required',
+            'weightproduct' =>  'required',
+            'caratproduct'  =>  'required',
+            'purchaseprice' =>  'required',
+            'purchasedate'  =>  'required',
+            'conditionproduct'  =>  'required',
+            'typeproduct'   =>  'required',
+            'categoriesproduct' =>  'required'
+        ]);
+
+        if ($request->file('photoproduct')) {
+
+            $path = 'storage/photoproduct/' . $listpurchase->photoproduct;
+
+            if (File::exists($path)) {
+                File::delete($path);
+            }
+
+            $extension = $request->file('photoproduct')->getClientOriginalExtension();
+            $newphoto = $request->codeproduct . '-' . now()->timestamp . '.' . $extension;
+            $request->file('photoproduct')->storeAs('photoproduct', $newphoto);
+            $request['photoproduct'] = $newphoto;
+
+            $updatepurchase = PurchaseModel::where('id', $id)
+                ->update([
+                    'productname'   =>  $request->productname,
+                    'weightproduct' =>  $request->weightproduct,
+                    'caratproduct'  =>  $request->caratproduct,
+                    'purchaseprice' =>  $request->purchaseprice,
+                    'purchasedate'  =>  $request->purchasedate,
+                    'conditionproduct'  =>  $request->conditionproduct,
+                    'typeproduct'   =>  $request->typeproduct,
+                    'categoriesproduct' =>  $request->categoriesproduct,
+                    'photoproduct'  => $newphoto
+                ]);
+
+            if ($updatepurchase) {
+                ProductModel::where('codeproduct', $request->codeproduct)
+                    ->update([
+                        'nameproduct'   =>  $request->productname,
+                        'weightproduct' =>  $request->weightproduct,
+                        'caratproduct'  =>  $request->caratproduct,
+                        'purchaseprice' =>  $request->purchaseprice,
+                        'typeproduct'   =>  $request->typeproduct,
+                        'photoproduct'  => $newphoto
+                    ]);
+            }
+        } else {
+            $updatepurchase = PurchaseModel::where('id', $id)
+                ->update([
+                    'productname'   =>  $request->productname,
+                    'weightproduct' =>  $request->weightproduct,
+                    'caratproduct'  =>  $request->caratproduct,
+                    'purchaseprice' =>  $request->purchaseprice,
+                    'purchasedate'  =>  $request->purchasedate,
+                    'conditionproduct'  =>  $request->conditionproduct,
+                    'typeproduct'   =>  $request->typeproduct,
+                    'categoriesproduct' =>  $request->categoriesproduct
+                ]);
+
+            if ($updatepurchase) {
+                ProductModel::where('codeproduct', $request->codeproduct)
+                    ->update([
+                        'nameproduct'   =>  $request->productname,
+                        'weightproduct' =>  $request->weightproduct,
+                        'caratproduct'  =>  $request->caratproduct,
+                        'purchaseprice' =>  $request->purchaseprice,
+                        'typeproduct'   =>  $request->typeproduct
+                    ]);
+            }
+        }
+
+        return redirect('purchase')->with('success', 'Data Success Di Update !');
     }
 }

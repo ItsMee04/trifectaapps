@@ -87,7 +87,7 @@
                                             <strong><a
                                                     href="product-details/{{ $item->codeproduct }}">{{ $item->nameproduct }}</a></strong>
                                         </td>
-                                        <td>{{ 'Rp.' . ' ' . number_format($item->priceproduct, 2) }}</td>
+                                        <td>{{ 'Rp.' . ' ' . number_format($item->sellingprice, 2) }}</td>
                                         <td>
                                             @if ($item->status == 1)
                                                 <span class="badges bg-lightgreen">AKTIF</span>
@@ -147,8 +147,8 @@
                             </div>
                             <div class="col-lg-6">
                                 <div class="form-group">
-                                    <label>Price Product</label>
-                                    <input type="text" class="form-control form-white" name="priceproduct" required>
+                                    <label>Selling Price</label>
+                                    <input type="text" class="form-control form-white" name="sellingprice" required>
                                 </div>
                             </div>
                         </div>

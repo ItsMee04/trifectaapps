@@ -125,17 +125,17 @@
                     <form action="categories" method="POST">
                         @csrf
                         <div class="form-group">
-                            <label>Categories</label>
+                            <label for="categories">Categories</label>
                             <input type="text" class="form-control form-white" placeholder="Masukan Jenis Kategori"
-                                type="text" name="categories" required>
+                                type="text" name="categories" id="categories" required>
                         </div>
                         <div class="form-group">
-                            <label>Description</label>
-                            <textarea class="form-control form-white" name="description" required></textarea>
+                            <label for="description">Description</label>
+                            <textarea class="form-control form-white" name="description" id="description" required></textarea>
                         </div>
                         <div class="form-group">
-                            <label>Status</label>
-                            <select class="select form-control form-white" name="status" required>
+                            <label for="status">Status</label>
+                            <select class="select form-control form-white" name="status" id="status" required>
                                 <option value="1"> AKTIF</option>
                                 <option value="2"> TIDAK AKTIF</option>
                             </select>

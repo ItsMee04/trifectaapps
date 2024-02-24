@@ -38,7 +38,7 @@ class ProductController extends Controller
             'codeproduct'           => 'required',
             'nameproduct'           => 'required',
             'descriptionproduct'    => 'required',
-            'priceproduct'          => 'required',
+            'sellingprice'          => 'required',
             'typeproduct'           => 'required',
             'weightproduct'         => 'required',
             'caratproduct'          => 'required',
@@ -57,7 +57,7 @@ class ProductController extends Controller
             'codeproduct'           => $request->codeproduct,
             'nameproduct'           => $request->nameproduct,
             'descriptionproduct'    => $request->descriptionproduct,
-            'priceproduct'          => $request->priceproduct,
+            'sellingprice'          => $request->sellingprice,
             'typeproduct'           => $request->typeproduct,
             'weightproduct'         => $request->weightproduct,
             'caratproduct'          => $request->caratproduct,
@@ -89,7 +89,7 @@ class ProductController extends Controller
             'codeproduct'           => 'required',
             'nameproduct'           => 'required',
             'descriptionproduct'    => 'required',
-            'priceproduct'          => 'required',
+            'sellingprice'          => 'required',
             'typeproduct'           => 'required',
             'weightproduct'         => 'required',
             'caratproduct'          => 'required',
@@ -113,7 +113,7 @@ class ProductController extends Controller
                 ->update([
                     'nameproduct'           => $request->nameproduct,
                     'descriptionproduct'    => $request->descriptionproduct,
-                    'priceproduct'          => $request->priceproduct,
+                    'sellingprice'          => $request->sellingprice,
                     'typeproduct'           => $request->typeproduct,
                     'weightproduct'         => $request->weightproduct,
                     'caratproduct'          => $request->caratproduct,
@@ -125,7 +125,7 @@ class ProductController extends Controller
                 ->update([
                     'nameproduct'           => $request->nameproduct,
                     'descriptionproduct'    => $request->descriptionproduct,
-                    'priceproduct'          => $request->priceproduct,
+                    'sellingprice'          => $request->sellingprice,
                     'typeproduct'           => $request->typeproduct,
                     'weightproduct'         => $request->weightproduct,
                     'caratproduct'          => $request->caratproduct,
@@ -139,7 +139,7 @@ class ProductController extends Controller
     {
         $listproduct = ProductModel::where('id', $id)->first();
 
-        $path = 'storage/fotoproduk/' . $listproduct->photoproduct;
+        $path = 'storage/photoproduct/' . $listproduct->photoproduct;
 
         if (File::exists($path)) {
             File::delete($path);

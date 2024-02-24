@@ -10,13 +10,13 @@
                 <form action="/typeproduct/{{ $item->id }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="form-group">
-                        <label>Type Product</label>
+                        <label for="edittype">Type Product</label>
                         <input type="text" class="form-control form-white" placeholder="Enter Type Product"
-                            value="{{ $item->type }}" type="text" name="type" required>
+                            value="{{ $item->type }}" type="text" name="type" id="edittype" required>
                     </div>
                     <div class="form-group">
-                        <label>Status</label>
-                        <select class="select form-control form-white" name="status" required>
+                        <label for="editstatus">Status</label>
+                        <select class="select form-control form-white" name="status" id="editstatus" required>
                             <option value="1" @if ($item->status == '1') selected="selected" @endif> AKTIF
                             </option>
                             <option value="2" @if ($item->status == '2') selected="selected" @endif> TIDAK

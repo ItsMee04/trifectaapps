@@ -8,14 +8,25 @@
 
             <!-- Page Header -->
             <div class="page-header">
-                <div class="row">
+                <div class="add-item d-flex">
                     <div class="col">
-                        <h3 class="page-title">Sales Transaction</h3>
+                        <h3 class="page-title">PURCHASE</h3>
                         <ul class="breadcrumb">
                             <li class="breadcrumb-item"><a href="/purchase">Purchase</a></li>
+                            <li class="breadcrumb-item active">Edit Purchase</li>
                         </ul>
                     </div>
                 </div>
+                <ul class="table-top-head">
+                    <li>
+                        <div class="page-btn">
+                            <a href="/purchase" class="btn btn-outline-dark"><i data-feather="arrow-left"
+                                    class="me-2"></i>Back
+                                to
+                                Purchase</a>
+                        </div>
+                    </li>
+                </ul>
             </div>
             <!-- /Page Header -->
             @if ($errors->any())
@@ -36,7 +47,8 @@
                             <h5 class="card-title">PURCHASE EDIT FORM</h5>
                         </div>
                         <div class="card-body">
-                            <form action="/purchase/{{ $listpurchase->id }}" method="POST" enctype="multipart/form-data">
+                            <form action="/edit-purchase/{{ $listpurchase->id }}" method="POST"
+                                enctype="multipart/form-data">
                                 @csrf
                                 <div class="col-lg-12">
                                     <div class="form-group">
@@ -48,67 +60,92 @@
                                 <div class="row">
                                     <div class="col-lg-6">
                                         <div class="form-group">
-                                            <label>Name Product</label>
-                                            <input type="text" name="nameproduct"
-                                                value="{{ $listpurchase->productname }}" required>
+                                            <label>Code Product</label>
+                                            <input type="text" class="form-control form-white"
+                                                placeholder="Masukan Nama Customer" value="{{ $listpurchase->codeproduct }}"
+                                                type="text" name="codeproduct" readonly>
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="form-group">
-                                            <label>Purchase Price</label>
-                                            <input type="text" class="form-control"
-                                                value="{{ $listpurchase->purchaseprice }}" name="priceproduct" required>
+                                            <label>Product Name</label>
+                                            <input type="text" class="form-control form-white"
+                                                placeholder="Masukan Nama Produk" name="productname"
+                                                value="{{ $listpurchase->productname }}" required>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-lg-6">
                                         <div class="form-group">
+                                            <label>Weight Product</label>
+                                            <input type="text" class="form-control form-white"
+                                                placeholder="Masukan Berat Produk" type="text"
+                                                value="{{ $listpurchase->weightproduct }}" name="weightproduct" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label>Carat Product</label>
+                                            <input type="text" class="form-control form-white"
+                                                placeholder="Masukan Karat Produk" value="{{ $listpurchase->caratproduct }}"
+                                                name="caratproduct" required>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label>Purchase Price</label>
+                                            <input type="text" class="form-control form-white"
+                                                placeholder="Masukan Harga Beli Produk"
+                                                value="{{ $listpurchase->purchaseprice }}" type="text"
+                                                name="purchaseprice" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label>Purchase Date</label>
+                                            <input type="date" class="form-control form-white"
+                                                placeholder="Masukan Tanggal Beli Produk"
+                                                value="{{ $listpurchase->purchasedate }}" name="purchasedate" required>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label>Condition Product</label>
+                                            <select class="select form-control form-white" name="conditionproduct" required>
+                                                <option value="1"> REPARASI</option>
+                                                <option value="2"> NON REPARASI</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
                                             <label>Type Product</label>
-                                            <select class="select" name="typeproduct" required>
-                                                @foreach ($typeproduct as $itemtype)
-                                                    <option value="{{ $itemtype->id }}"
-                                                        @if ($listpurchase->typeproduct == $itemtype->id) selected="selected" @endif>
-                                                        {{ $itemtype->type }}</option>
+                                            <select class="select form-control form-white" name="typeproduct" required>
+                                                <option disabled selected hidden> Pilih Tipe</option>
+                                                @foreach ($typeproduct as $itemtypeproduct)
+                                                    <option value="{{ $itemtypeproduct->id }}"
+                                                        @if ($listpurchase->typeproduct == $itemtypeproduct->id) selected="selected" @endif>
+                                                        {{ $itemtypeproduct->type }}</option>
                                                 @endforeach
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="col-lg-6">
-                                        <div class="form-group">
-                                            <label>Weight Product</label>
-                                            <input type="text" name="weightproduct"
-                                                value="{{ $listpurchase->weightproduct }}" required>
-                                        </div>
-                                    </div>
                                 </div>
-                                <div class="row">
-                                    <div class="col-lg-6">
-                                        <div class="form-group">
-                                            <label>Carat Product</label>
-                                            <input type="text" name="caratproduct"
-                                                value="{{ $listpurchase->caratproduct }}" required>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <div class="form-group">
-                                            <label>Status</label>
-                                            <select class="select" name="status" required>
-                                                <option value="1"
-                                                    @if ($listpurchase->status == '1') selected="selected" @endif> AKTIF
-                                                </option>
-                                                <option value="2"
-                                                    @if ($listpurchase->status == '2') selected="selected" @endif> TIDAK
-                                                    AKTIF</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-12">
-                                    <div class="form-group">
-                                        <label>Description Product</label>
-                                        <textarea class="form-control" name="descriptionproduct" required>{{ $listpurchase->descriptionproduct }}</textarea>
-                                    </div>
+                                <div class="form-group">
+                                    <label>Categories Product</label>
+                                    <select class="select form-control form-white" name="categoriesproduct" required>
+                                        <option disabled selected hidden> Pilih Kategori</option>
+                                        @foreach ($listcategories as $itemcategories)
+                                            <option value="{{ $itemcategories->id }}"
+                                                @if ($listpurchase->categoriesproduct == $itemcategories->id) selected="selected" @endif>
+                                                {{ $itemcategories->categories }}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
                                 <div class="col-lg-12">
                                     <div class="form-group">

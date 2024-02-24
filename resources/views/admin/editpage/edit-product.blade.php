@@ -56,9 +56,10 @@
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="form-group">
-                                            <label>Price Product</label>
+                                            <label for="sellingprice">Selling Price</label>
                                             <input type="text" class="form-control"
-                                                value="{{ $listproduct->priceproduct }}" name="priceproduct" required>
+                                                value="{{ $listproduct->sellingprice }}" name="sellingprice"
+                                                id="sellingprice" required>
                                         </div>
                                     </div>
                                 </div>
