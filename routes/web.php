@@ -133,7 +133,8 @@ Route::middleware('auth')->group(function () {
         Route::get('delete-purchase/{id}', [PurchaseController::class, 'delete']);
         Route::get('update-purchase/{id}', [PurchaseController::class, 'updateStatus']);
 
-        Route::get('purchase-suplier', []);
+        Route::get('purchase-supplier', [PurchaseController::class, 'indexPurchaseSupplier']);
+        Route::post('purchase-supplier', [PurchaseController::class, 'storePurchaseSupplier']);
 
         //route logout
         Route::get('logout', [AuthController::class, 'logout']);
