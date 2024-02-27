@@ -223,4 +223,40 @@ class PurchaseController extends Controller
 
         return redirect('purchase')->with('success', 'Data Success Di Update !');
     }
+
+    public function delete($id)
+    {
+        $listpurchase = PurchaseModel::where('id', $id)->first();
+        $idproduct    = $listpurchase->codeproduct;
+
+        $path = 'storage/photoproduct/' . $listpurchase->photoproduct;
+
+        if (File::exists($path)) {
+            File::delete($path);
+        }
+
+        $deletePurchase =  PurchaseModel::where('id', $id)->delete();
+
+        if ($deletePurchase) {
+            ProductModel::where('codeproduct', $idproduct)->delete();
+        }
+
+        return redirect('purchase')->with('success', 'Data Success Di Hapus !');
+    }
+
+    public function updateStatus($id)
+    {
+        $codeproduct = PurchaseModel::where('id', $id)->first()->codeproduct;
+        $updateStatus = PurchaseModel::where('id', $id)->update([
+            'status' => 1,
+        ]);
+
+        if ($updateStatus) {
+            ProductModel::where('codeproduct', $codeproduct)->update([
+                'status'    => 1,
+            ]);
+        }
+
+        return redirect('purchase')->with('success', 'Data Success Di Update !');
+    }
 }

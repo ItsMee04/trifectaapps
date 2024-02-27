@@ -130,6 +130,10 @@ Route::middleware('auth')->group(function () {
         Route::post('purchase', [PurchaseController::class, 'store']);
         Route::get('edit-purchase/{id}', [PurchaseController::class, 'show']);
         Route::post('edit-purchase/{id}', [PurchaseController::class, 'update']);
+        Route::get('delete-purchase/{id}', [PurchaseController::class, 'delete']);
+        Route::get('update-purchase/{id}', [PurchaseController::class, 'updateStatus']);
+
+        Route::get('purchase-suplier', []);
 
         //route logout
         Route::get('logout', [AuthController::class, 'logout']);

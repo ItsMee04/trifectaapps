@@ -221,7 +221,7 @@ class TransactionController extends Controller
         $subtotal = ProductModel::leftjoin('cart', 'product.id', 'cart.product')
             ->where('cart.status', 1)
             ->where('cart.sales', Auth::user()->iduser)
-            ->sum('product.priceproduct');
+            ->sum('product.sellingprice');
 
         return view('admin.shopping-cart', [
             'listproductcincin' =>  $listproductcincin,

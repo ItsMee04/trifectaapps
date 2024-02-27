@@ -97,8 +97,22 @@
                                         class="@if (request()->route()->uri == 'orders' || request()->route()->uri == 'orders-details/{id}') active @endif">Orders</a></li>
                             </ul>
                         </li>
-                        <li><a href="/purchase" class="@if (request()->route()->uri == 'purchase' || request()->route()->uri == 'purchase/{id}') active @endif"><i
-                                    data-feather="file-text"></i><span>Purchase</span></a></li>
+                        <li class="submenu">
+                            <a href="javascript:void(0);"
+                                class="@if (request()->route()->uri == 'purchase' ||
+                                        request()->route()->uri == 'edit-purchase/{id}' ||
+                                        request()->route()->uri == 'suplier-purchase/{id}' ||
+                                        request()->route()->uri == 'edit-suplier-purchase/{id}') active subdrop @endif"><i
+                                    data-feather="credit-card"></i><span>Purchase</span><span
+                                    class="menu-arrow"></span></a>
+                            <ul>
+                                <li><a href="/purchase"
+                                        class="@if (request()->route()->uri == 'purchase' || request()->route()->uri == 'edit-purchase/{id}') active @endif">Purchase</a></li>
+                                <li><a href="/purchase-suplier"
+                                        class="@if (request()->route()->uri == 'orders' || request()->route()->uri == 'orders-details/{id}') active @endif">Purchase
+                                        Suplier</a></li>
+                            </ul>
+                        </li>
                         <li><a href="/pos"><i data-feather="hard-drive"></i><span>POS</a></li>
                     </ul>
                 </li>

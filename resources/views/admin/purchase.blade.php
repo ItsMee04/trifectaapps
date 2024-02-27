@@ -100,7 +100,7 @@
                                                     data-toggle="tooltip" data-placement="top" title="UPDATE STATUS">
                                             </a>
                                             <a class="confirm-text me-3" href="javascript:void(0);"
-                                                onclick="confirm_modal('customer/{{ $item->id }}');">
+                                                onclick="confirm_modal('delete-purchase/{{ $item->id }}');">
                                                 <img src="{{ asset('assets') }}/img/icons/delete.svg" alt="img"
                                                     data-toggle="tooltip" data-placement="top" title="DELETE DATA">
                                             </a>
@@ -255,8 +255,8 @@
                 </div>
                 <div class="modal-body">
                     <div class="submit-section">
-                        <a id="delete_link" class="btn btn-warning save-category submit-btn"
-                            data-dismiss="modal">Delete</a>
+                        <a id="update_link" class="btn btn-warning save-category submit-btn"
+                            data-dismiss="modal">UPDATE</a>
                     </div>
                 </div>
             </div>
@@ -269,7 +269,7 @@
             $('#modal_update').modal('show', {
                 backdrop: 'static'
             });
-            document.getElementById('delete_link').setAttribute('href', delete_url);
+            document.getElementById('update_link').setAttribute('href', delete_url);
         }
     </script>
 
