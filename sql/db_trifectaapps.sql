@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 24, 2024 at 02:33 PM
+-- Generation Time: Feb 27, 2024 at 09:16 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -246,9 +246,7 @@ CREATE TABLE `product` (
 INSERT INTO `product` (`id`, `codeproduct`, `nameproduct`, `purchaseprice`, `sellingprice`, `descriptionproduct`, `typeproduct`, `weightproduct`, `caratproduct`, `photoproduct`, `status`, `created_at`, `updated_at`) VALUES
 (1, 'P-2024000001', 'Cincin Permata', 2500000, 3500000, 'Cincin Permata Merah', 1, 1, 24, 'P-2024000001-1707792070.png', 1, '2024-02-03 11:48:47', '2024-02-24 06:23:57'),
 (3, 'P-2024000002', 'Cincin Emas', 2500000, 3500000, 'Cincin Emas', 1, 1, 24, 'P-2024000002-1707792086.png', 1, '2024-02-04 14:45:16', '2024-02-24 06:24:08'),
-(8, 'P-2024000003', 'Cincin Biru', 3000000, 0, 'Cincin dengan permata biru', 1, 2.5, 24, 'P-2024000003-1708779765.png', 2, '2024-02-24 04:52:20', '2024-02-24 06:17:46'),
-(9, 'P-2024000004', 'Gelang Emas', 0, 0, 'Gelang Emas', 2, 2.5, 24, 'P-2024000004-1708775567.png', 2, '2024-02-24 04:52:47', '2024-02-24 04:52:47'),
-(10, 'P-2024000005', 'Kalung Emas', 0, 0, '-', 3, 2.5, 24, 'P-2024000005-1708777200.png', 2, '2024-02-24 05:20:00', '2024-02-24 05:20:00');
+(11, 'P-2024000003', 'Cincin Merah', 0, 0, '-', 1, 2.5, 24, 'P-2024000003-1709017683.png', 1, '2024-02-27 00:08:03', '2024-02-27 00:24:20');
 
 -- --------------------------------------------------------
 
@@ -270,7 +268,9 @@ CREATE TABLE `profession` (
 
 INSERT INTO `profession` (`id`, `profession`, `status`, `created_at`, `updated_at`) VALUES
 (2, 'KEPALA TOKO', 1, '2024-01-31 03:55:49', '2024-01-31 03:55:49'),
-(4, 'KARYAWAN', 1, '2024-02-01 08:09:04', '2024-02-01 08:09:04');
+(4, 'KARYAWAN', 1, '2024-02-01 08:09:04', '2024-02-01 08:09:04'),
+(6, 'KASIR', 1, '2024-02-26 18:06:21', '2024-02-26 18:06:21'),
+(7, 'KASIR', 1, '2024-02-26 18:06:51', '2024-02-26 18:06:51');
 
 -- --------------------------------------------------------
 
@@ -301,9 +301,7 @@ CREATE TABLE `purchase` (
 --
 
 INSERT INTO `purchase` (`id`, `idpurchase`, `codeproduct`, `productname`, `weightproduct`, `caratproduct`, `purchaseprice`, `purchasedate`, `conditionproduct`, `categoriesproduct`, `photoproduct`, `typeproduct`, `status`, `created_at`, `updated_at`) VALUES
-(8, 'PU-2024000001', 'P-2024000003', 'Cincin Biru', 2.50, 24.00, 3000000, '2024-02-24', '1', 1, 'P-2024000003-1708779765.png', 1, 2, '2024-02-24 04:52:20', '2024-02-24 06:17:46'),
-(9, 'PU-2024000002', 'P-2024000004', 'Gelang Emas', 2.50, 24.00, 3000000, '2024-02-24', '1', 1, 'P-2024000004-1708775567.png', 2, 2, '2024-02-24 04:52:47', '2024-02-24 04:52:47'),
-(10, 'PU-2024000003', 'P-2024000005', 'Kalung Emas', 2.50, 24.00, 3000000, '2024-02-24', '2', 1, 'P-2024000005-1708777200.png', 3, 2, '2024-02-24 05:20:00', '2024-02-24 05:20:00');
+(11, 'PU-2024000001', 'P-2024000003', 'Cincin Merah', 2.50, 24.00, 3000000, '2024-02-27', '1', 1, 'P-2024000003-1709017683.png', 1, 1, '2024-02-27 00:08:03', '2024-02-27 00:24:20');
 
 -- --------------------------------------------------------
 
@@ -426,7 +424,8 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`id`, `iduser`, `username`, `password`, `role`, `status`, `remember_token`, `created_at`, `updated_at`) VALUES
 (1, 2, 'indrakusuma', '$2y$12$.Qw/y33owwFeOPBYKLUxOOB1ESywtNqHUxNskTzhKYw/NrdSAXoIC', 1, 1, NULL, NULL, NULL),
-(5, 4, 'dimasanugerah', '$2y$12$EfgPk9moSFnvAICc9cgCHOuRBtScelVtmJy8H8m8KOeAieSAi/Pe6', 1, 1, NULL, '2024-02-09 04:08:59', '2024-02-09 04:09:31');
+(5, 4, 'dimasanugerah', '$2y$12$EfgPk9moSFnvAICc9cgCHOuRBtScelVtmJy8H8m8KOeAieSAi/Pe6', 1, 1, NULL, '2024-02-09 04:08:59', '2024-02-09 04:09:31'),
+(6, 4, 'dimasanugerah', '$2y$12$FTgsANsc0DE930Sj3rLGbeqcVZoa/PyuPY1OsPkTULm8QN7GAZCkK', 2, 1, NULL, '2024-02-27 00:08:52', '2024-02-27 00:09:00');
 
 --
 -- Indexes for dumped tables
@@ -593,19 +592,19 @@ ALTER TABLE `personal_access_tokens`
 -- AUTO_INCREMENT for table `product`
 --
 ALTER TABLE `product`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `profession`
 --
 ALTER TABLE `profession`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `purchase`
 --
 ALTER TABLE `purchase`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `role`
@@ -635,7 +634,7 @@ ALTER TABLE `typeproduct`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
