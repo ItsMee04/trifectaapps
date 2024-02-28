@@ -11,6 +11,7 @@ use App\Http\Controllers\Controller;
 use App\Models\PurchaseSuplierModel;
 use App\Models\SupplierModel;
 use Illuminate\Support\Facades\File;
+use Svg\Tag\Rect;
 
 class PurchaseController extends Controller
 {
@@ -397,5 +398,121 @@ class PurchaseController extends Controller
             'typeproduct'  => $typeproduct,
             'listcategories'    =>  $listcategories,
         ]);
+    }
+
+    public function updatePurchaseSupplier(Request $request, $id)
+    {
+        $listpurchase = PurchaseSuplierModel::where('id', $id)->first();
+
+        $validasi = $request->validate([
+            'productname'   =>  'required',
+            'weightproduct' =>  'required',
+            'caratproduct'  =>  'required',
+            'purchaseprice' =>  'required',
+            'purchasedate'  =>  'required',
+            'conditionproduct'  =>  'required',
+            'typeproduct'   =>  'required',
+            'categoriesproduct' =>  'required'
+        ]);
+
+        if ($request->file('photoproduct')) {
+
+            $path = 'storage/photoproduct/' . $listpurchase->photoproduct;
+
+            if (File::exists($path)) {
+                File::delete($path);
+            }
+
+            $extension = $request->file('photoproduct')->getClientOriginalExtension();
+            $newphoto = $request->codeproduct . '-' . now()->timestamp . '.' . $extension;
+            $request->file('photoproduct')->storeAs('photoproduct', $newphoto);
+            $request['photoproduct'] = $newphoto;
+
+            $updatepurchase = PurchaseSuplierModel::where('id', $id)
+                ->update([
+                    'productname'   =>  $request->productname,
+                    'weightproduct' =>  $request->weightproduct,
+                    'caratproduct'  =>  $request->caratproduct,
+                    'purchaseprice' =>  $request->purchaseprice,
+                    'purchasedate'  =>  $request->purchasedate,
+                    'conditionproduct'  =>  $request->conditionproduct,
+                    'typeproduct'   =>  $request->typeproduct,
+                    'categoriesproduct' =>  $request->categoriesproduct,
+                    'photoproduct'  => $newphoto
+                ]);
+
+            if ($updatepurchase) {
+                ProductModel::where('codeproduct', $request->codeproduct)
+                    ->update([
+                        'nameproduct'   =>  $request->productname,
+                        'weightproduct' =>  $request->weightproduct,
+                        'caratproduct'  =>  $request->caratproduct,
+                        'purchaseprice' =>  $request->purchaseprice,
+                        'typeproduct'   =>  $request->typeproduct,
+                        'photoproduct'  => $newphoto
+                    ]);
+            }
+        } else {
+            $updatepurchase = PurchaseSuplierModel::where('id', $id)
+                ->update([
+                    'productname'   =>  $request->productname,
+                    'weightproduct' =>  $request->weightproduct,
+                    'caratproduct'  =>  $request->caratproduct,
+                    'purchaseprice' =>  $request->purchaseprice,
+                    'purchasedate'  =>  $request->purchasedate,
+                    'conditionproduct'  =>  $request->conditionproduct,
+                    'typeproduct'   =>  $request->typeproduct,
+                    'categoriesproduct' =>  $request->categoriesproduct
+                ]);
+
+            if ($updatepurchase) {
+                ProductModel::where('codeproduct', $request->codeproduct)
+                    ->update([
+                        'nameproduct'   =>  $request->productname,
+                        'weightproduct' =>  $request->weightproduct,
+                        'caratproduct'  =>  $request->caratproduct,
+                        'purchaseprice' =>  $request->purchaseprice,
+                        'typeproduct'   =>  $request->typeproduct
+                    ]);
+            }
+        }
+
+        return redirect('purchase-supplier')->with('success', 'Data Success Di Update !');
+    }
+
+    public function deletePurchaseSupplier($id)
+    {
+        $listpurchase = PurchaseSuplierModel::where('id', $id)->first();
+        $idproduct    = $listpurchase->codeproduct;
+
+        $path = 'storage/photoproduct/' . $listpurchase->photoproduct;
+
+        if (File::exists($path)) {
+            File::delete($path);
+        }
+
+        $deletePurchase =  PurchaseSuplierModel::where('id', $id)->delete();
+
+        if ($deletePurchase) {
+            ProductModel::where('codeproduct', $idproduct)->delete();
+        }
+
+        return redirect('purchase-supplier')->with('success', 'Data Success Di Hapus !');
+    }
+
+    public function updateStatusPurchaseSupplier($id)
+    {
+        $codeproduct = PurchaseSuplierModel::where('id', $id)->first()->codeproduct;
+        $updateStatus = PurchaseSuplierModel::where('id', $id)->update([
+            'status' => 1,
+        ]);
+
+        if ($updateStatus) {
+            ProductModel::where('codeproduct', $codeproduct)->update([
+                'status'    => 1,
+            ]);
+        }
+
+        return redirect('purchase-supplier')->with('success', 'Data Success Di Update !');
     }
 }

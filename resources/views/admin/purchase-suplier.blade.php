@@ -91,17 +91,17 @@
                                             @endif
                                         </td>
                                         <td>
-                                            <a class="me-3" href="/edit-purchase/{{ $item->id }}">
+                                            <a class="me-3" href="/edit-purchase-supplier/{{ $item->id }}">
                                                 <img src="{{ asset('assets') }}/img/icons/edit.svg" alt="img"
                                                     data-toggle="tooltip" data-placement="top" title="EDIT DATA">
                                             </a>
                                             <a class="confirm-text me-3" href="javascript:void(0);"
-                                                onclick="confirm_update('update-purchase/{{ $item->id }}');">
+                                                onclick="confirm_update('update-purchase-supplier/{{ $item->id }}');">
                                                 <img src="{{ asset('assets') }}/img/icons/recycle.svg" alt="img"
                                                     data-toggle="tooltip" data-placement="top" title="UPDATE STATUS">
                                             </a>
                                             <a class="confirm-text me-3" href="javascript:void(0);"
-                                                onclick="confirm_modal('delete-purchase/{{ $item->id }}');">
+                                                onclick="confirm_modal('delete-purchase-supplier/{{ $item->id }}');">
                                                 <img src="{{ asset('assets') }}/img/icons/delete.svg" alt="img"
                                                     data-toggle="tooltip" data-placement="top" title="DELETE DATA">
                                             </a>

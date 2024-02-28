@@ -135,6 +135,10 @@ Route::middleware('auth')->group(function () {
 
         Route::get('purchase-supplier', [PurchaseController::class, 'indexPurchaseSupplier']);
         Route::post('purchase-supplier', [PurchaseController::class, 'storePurchaseSupplier']);
+        Route::get('edit-purchase-supplier/{id}', [PurchaseController::class, 'showPurchaseSupplier']);
+        Route::post('edit-purchase-supplier/{id}', [PurchaseController::class, 'updatePurchaseSupplier']);
+        Route::get('delete-purchase-supplier/{id}', [PurchaseController::class, 'deletePurchaseSupplier']);
+        Route::get('update-purchase-supplier/{id}', [PurchaseController::class, 'updateStatusPurchaseSupplier']);
 
         //route logout
         Route::get('logout', [AuthController::class, 'logout']);
